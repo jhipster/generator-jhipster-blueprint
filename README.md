@@ -1,6 +1,6 @@
 # generator-jhipster-blueprint
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster module, used to create a JHipster module - "*One JHipster module to rule them all*"
+> JHipster module, used to create a JHipster blueprint
 
 <div align="center">
     <a href="http://jhipster.github.io">

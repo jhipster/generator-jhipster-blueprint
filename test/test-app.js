@@ -13,10 +13,7 @@ const expectedFiles = {
         '.gitignore',
         '.travis.yml',
         'package.json',
-        'README.md',
-        // 'test/templates/maven-angularX/.yo-rc.json',
-        // 'test/templates/gradle-angular1/.yo-rc.json',
-        // 'test/test-app.js'
+        'README.md'
     ],
     client: [
         'generators/client/index.js',

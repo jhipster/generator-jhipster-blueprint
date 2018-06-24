@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const EntityGenerator = require('generator-jhipster/generators/entity');
+const SpringServiceGenerator = require('generator-jhipster/generators/spring-service');
 
 
-module.exports = class extends EntityGenerator {
+module.exports = class extends SpringServiceGenerator {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
@@ -14,13 +14,11 @@ module.exports = class extends EntityGenerator {
         }
 
         this.configOptions = jhContext.configOptions || {};
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
     }
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `EntityGenerator`
+         * Any method beginning with _ can be reused from the superclass `SpringServiceGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -64,18 +62,13 @@ module.exports = class extends EntityGenerator {
         return super._prompting();
     }
 
-    get configuring() {
+    get default() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
+        return super._default();
     }
 
     get writing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._writing();
-    }
-
-    get install() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._install();
     }
 };

@@ -1,14 +1,14 @@
 # generator-jhipster-<%= moduleName %>
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster module, <%= moduleDescription %>
+> JHipster blueprint, <%= moduleDescription %>
 
 # Introduction
 
-This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
+This is a [JHipster](http://jhipster.github.io/) blueprint, that is meant to be used in a JHipster application.
 
 # Prerequisites
 
-As this is a [JHipster](http://jhipster.github.io/) module, we expect you have JHipster and its related tools already installed:
+As this is a [JHipster](http://jhipster.github.io/) blueprint, we expect you have JHipster and its related tools already installed:
 
 - [Installing JHipster](https://jhipster.github.io/installation.html)
 
@@ -16,13 +16,13 @@ As this is a [JHipster](http://jhipster.github.io/) module, we expect you have J
 
 ## With Yarn
 
-To install this module:
+To install this blueprint:
 
 ```bash
 yarn global add generator-jhipster-<%= moduleName %>
 ```
 
-To update this module:
+To update this blueprint:
 
 ```bash
 yarn global upgrade generator-jhipster-<%= moduleName %>
@@ -30,19 +30,34 @@ yarn global upgrade generator-jhipster-<%= moduleName %>
 
 ## With NPM
 
-To install this module:
+To install this blueprint:
 
 ```bash
 npm install -g generator-jhipster-<%= moduleName %>
 ```
 
-To update this module:
+To update this blueprint:
 
 ```bash
 npm update -g generator-jhipster-<%= moduleName %>
 ```
 
 # Usage
+
+## Blueprint rules and format
+
+1. Name of the generator should be of format generator-jhipster-<%= moduleName %>
+2. Should be installed either globally or locally
+3. Should have keywords <jhipster-blueprint> in package.json
+
+
+## During development of this blueprint
+
+1. On blueprint folder `yarn link`
+2. On blueprint folder `yarn link generator-jhipster`
+2. On the project created `yarn link generator-jhipster`
+4. On the project created `yarn link generator-jhipster-<%= moduleName %>`
+
 
 # License
 

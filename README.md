@@ -10,11 +10,11 @@
 
 # Introduction
 
-This is **not really** a [JHipster](http://jhipster.github.io/) module, that is meant to **not** be used in a JHipster application. This module is used to generate a new template for coding a new JHipster module. A JHipster module to create a JHipster module.
+This is **not really** a [JHipster](http://jhipster.github.io/) module, that is meant to **not** be used in a JHipster application. This module is used to generate a template for coding a new JHipster blueprint. A JHipster module to create a JHipster blueprint.
 
 # Prerequisites
 
-Reading this [JHipster module](https://jhipster.github.io/modules/creating_a_module.html)
+Reading this [JHipster blueprint](https://jhipster.github.io/modules/creating_a_blueprint.html)
 
 # Installation
 
@@ -68,17 +68,17 @@ cd generator-jhipster-<name of your module>
 git init
 ```
 
-- launch the jhipster-module
+- launch the jhipster-blueprint
 
 ```bash
-yo jhipster-module
+yo jhipster-blueprint
 ```
 
 - answer all questions
 
 # License
 
-Apache-2.0 © [Pascal Grimaud](https://twitter.com/pascalgrimaud) and the respective JHipster contributors
+Apache-2.0 © [Deepu KS](https://twitter.com/deepu105) and the respective JHipster contributors
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-blueprint.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-blueprint

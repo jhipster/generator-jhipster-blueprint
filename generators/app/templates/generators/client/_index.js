@@ -1,26 +1,28 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const EntityGenerator = require('generator-jhipster/generators/entity');
+const ClientGenerator = require('generator-jhipster/generators/client');
+const prompts = require('./prompts');
+const writeFiles = require('./files').writeFiles;
 
 
-module.exports = class extends EntityGenerator {
+module.exports = class extends ClientGenerator {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
         const jhContext = this.jhipsterContext = this.options.jhipsterContext;
 
         if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint generator-jhipster-sample-blueprint')}`);
+            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
         }
 
         this.configOptions = jhContext.configOptions || {};
         // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
+        jhContext.setupClientOptions(this, jhContext);
     }
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `EntityGenerator`
+         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -60,8 +62,20 @@ module.exports = class extends EntityGenerator {
     }
 
     get prompting() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._prompting();
+        // The prompting phase is being overriden so that we can ask our own questions
+        return {
+            askForClient: prompts.askForClient,
+            askForClientSideOpts: prompts.askForClientSideOpts,
+
+            setSharedConfigOptions() {
+                this.configOptions.lastQuestion = this.currentQuestion;
+                this.configOptions.totalQuestions = this.totalQuestions;
+                this.configOptions.clientFramework = this.clientFramework;
+                this.configOptions.useSass = this.useSass;
+            }
+        };
+        // If the prompts doesnt need to be overriden then use the below commented return instead
+        // return super._prompting();
     }
 
     get configuring() {
@@ -69,13 +83,29 @@ module.exports = class extends EntityGenerator {
         return super._configuring();
     }
 
-    get writing() {
+    get default() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        return super._default();
+    }
+
+    get writing() {
+        // The writing phase is being overriden so that we can write our own templates
+        return {
+            write() {
+                writeFiles.call(this);
+            }
+        };
+        // If the templates doesnt need to be overrriden then use the below commented return instead
+        // return super._writing();
     }
 
     get install() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._install();
+    }
+
+    get end() {
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._end();
     }
 };

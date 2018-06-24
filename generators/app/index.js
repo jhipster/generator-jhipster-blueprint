@@ -7,30 +7,8 @@ module.exports = class extends Generator {
     get initializing() {
         return {
             displayLogo() {
-                this.log(`
-${chalk.red.bold('               Three::Modules')}
-${chalk.red.bold('           for:::the::Elven-Kings')}
-${chalk.red.bold('        under:the:sky,:Seven:for:the')}
-${chalk.red.bold('      Dwarf-Lords::in::their::halls:of')}
-${chalk.red.bold('     stone,:Nine             for:Mortal')}
-${chalk.red.bold(`    :::Men:::${chalk.yellow('    ________')}     doomed::to`)}
-${chalk.red.bold(`  die.:One${chalk.yellow('    _,-\'...:... `-.    ')}for:::the`)}
-${chalk.red.bold(` ::Dark::${chalk.yellow('   ,- .:::::::::::. `. ')}Hipster::on`)}
-${chalk.red.bold(` his:dark${chalk.yellow(' ,\'  .:::::::::::::.  `.  ')}:throne:`)}
-${chalk.red.bold(`In:::the${chalk.yellow(' /    :::: Java :::::    \\  ')}Land::of`)}
-${chalk.red.bold(`JHipster${chalk.yellow(' \\    ::: Hipster :::    /  ')}:where::`)}
-${chalk.red.bold(` ::the:::${chalk.yellow(' \'.  \':::::::::::::\'  ,\'  ')}Shadows:`)}
-${chalk.red.bold(`  lie::One${chalk.yellow('  `. ``:::::::::\'\' ,\'  ')}Module::to`)}
-${chalk.red.bold(`  ::rule::${chalk.yellow('    `-._```:\'\'\'_,-\'     ')}::them::`)}
-${chalk.red.bold(`   all,::One${chalk.yellow('      `-----\'       ')}Module::to`)}
-${chalk.red.bold('    ::find:::                  them,:One')}
-${chalk.red.bold('     Module:::::to          bring::them')}
-${chalk.red.bold('       all::and::in:the:darkness:bind')}
-${chalk.red.bold('         them:In:the:Land:of:JHipster')}
-${chalk.red.bold('            where:::the::Shadows')}
-${chalk.red.bold('                 :::lie.:::')}\n`);
                 this.log(chalk.white.bold('         http://www.jhipster.tech\n'));
-                this.log(chalk.white(`Welcome to the ${chalk.bold('JHipster Module')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`));
+                this.log(chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`));
             }
         };
     }
@@ -41,7 +19,7 @@ ${chalk.red.bold('                 :::lie.:::')}\n`);
             {
                 type: 'input',
                 name: 'moduleName',
-                validate: input => (/^[a-zA-Z0-9-]+$/.test(input) ? true : 'Your module name is mandatory, cannot contain special characters or a blank space, using the default name instead'),
+                validate: input => (/^[a-zA-Z0-9-]+$/.test(input) ? true : 'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead'),
                 message: 'What is the base name of your module?',
                 default: 'helloworld'
             },
@@ -51,31 +29,43 @@ ${chalk.red.bold('                 :::lie.:::')}\n`);
                 message: 'Give a description of your module'
             },
             {
-                type: 'list',
-                name: 'hook',
-                message: 'Do you want to enable hooks for your module from JHipster generator?',
+                type: 'checkbox',
+                name: 'blueprintSubs',
+                message: 'Which sub-generators do you want to override?',
                 choices: [
                     {
-                        name: 'No, This is a stand alone module',
-                        value: 'none'
+                        name: 'client',
+                        value: 'client'
                     },
                     {
-                        name: 'Yes, Enable post entity hook',
-                        value: 'postEntity'
+                        name: 'server',
+                        value: 'server'
+                    },
+                    {
+                        name: 'entity',
+                        value: 'entity'
+                    },
+                    {
+                        name: 'entity-client',
+                        value: 'entity-client'
+                    },
+                    {
+                        name: 'entity-server',
+                        value: 'entity-server'
+                    },
+                    {
+                        name: 'entity-i18n',
+                        value: 'entity-i18n'
+                    },
+                    {
+                        name: 'spring-controller',
+                        value: 'spring-controller'
+                    },
+                    {
+                        name: 'spring-service',
+                        value: 'spring-service'
                     }
-                ],
-                default: 'none'
-            },
-            {
-                when: props => props.hook !== 'none',
-                type: 'list',
-                name: 'hookCallback',
-                message: 'Do you want to add a subgenerator for this hook?',
-                choices: [
-                    { name: 'Yes, Add a subgenerator', value: 'entity' },
-                    { name: 'No, Hook to default generator', value: 'app' }
-                ],
-                default: 'entity'
+                ]
             },
             {
                 type: 'input',
@@ -124,12 +114,7 @@ ${chalk.red.bold('                 :::lie.:::')}\n`);
             this.props = props;
             this.moduleName = props.moduleName;
             this.moduleDescription = props.moduleDescription;
-            this.hook = props.hook;
-            this.hookCallback = props.hookCallback;
-            if (this.hook === 'postEntity') {
-                this.hookType = 'post';
-                this.hookFor = 'entity';
-            }
+            this.blueprintSubs = props.blueprintSubs;
             this.githubName = props.githubName;
             this.authorName = props.authorName;
             this.authorEmail = props.authorEmail;
@@ -166,24 +151,48 @@ ${chalk.red.bold('                 :::lie.:::')}\n`);
         }
         this.template('_README.md', 'README.md');
 
-        // copy files for test
-        mkdirp('test/templates/default');
-        this.template('test/templates/gradle-angular1/_yo-rc.json', 'test/templates/gradle-angular1/.yo-rc.json');
-        this.template('test/templates/maven-angularX/_yo-rc.json', 'test/templates/maven-angularX/.yo-rc.json');
-        this.template('test/_test-app.js', 'test/test-app.js');
+        // // copy files for test
+        // mkdirp('test/templates/default');
+        // this.template('test/templates/gradle-angular1/_yo-rc.json', 'test/templates/gradle-angular1/.yo-rc.json');
+        // this.template('test/templates/maven-angularX/_yo-rc.json', 'test/templates/maven-angularX/.yo-rc.json');
+        // this.template('test/_test-app.js', 'test/test-app.js');
 
-        // copy files for the generator
-        mkdirp('generators/app/templates');
-        this.template('generators/app/_index.js', 'generators/app/index.js');
-        this.template('generators/app/templates/_dummy.txt', 'generators/app/templates/dummy.txt');
-
-        // copy files for the hook
-        if (this.hook === 'none' || this.hookCallback === 'app') {
-            return;
+        if (this.blueprintSubs.includes('client')) {
+            // copy files for the client generator
+            mkdirp('generators/client/templates');
+            this.template('generators/client/_index.js', 'generators/client/index.js');
+            this.template('generators/client/_files.js', 'generators/client/files.js');
+            this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
+            this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
         }
-        mkdirp('generators/entity/templates');
-        this.template('generators/entity/_index.js', 'generators/entity/index.js');
-        this.template('generators/entity/templates/_dummy.txt', 'generators/entity/templates/dummy.txt');
+        if (this.blueprintSubs.includes('server')) {
+            // copy files for the server generator
+            this.template('generators/server/_index.js', 'generators/server/index.js');
+        }
+        if (this.blueprintSubs.includes('entity')) {
+            // copy files for the entity generator
+            this.template('generators/entity/_index.js', 'generators/entity/index.js');
+        }
+        if (this.blueprintSubs.includes('entity-client')) {
+            // copy files for the entity-client generator
+            this.template('generators/entity-client/_index.js', 'generators/entity-client/index.js');
+        }
+        if (this.blueprintSubs.includes('entity-server')) {
+            // copy files for the entity-server generator
+            this.template('generators/entity-server/_index.js', 'generators/entity-server/index.js');
+        }
+        if (this.blueprintSubs.includes('entity-i18n')) {
+            // copy files for the entity-i18n generator
+            this.template('generators/entity-i18n/_index.js', 'generators/entity-i18n/index.js');
+        }
+        if (this.blueprintSubs.includes('spring-controller')) {
+            // copy files for the spring-controller generator
+            this.template('generators/spring-controller/_index.js', 'generators/spring-controller/index.js');
+        }
+        if (this.blueprintSubs.includes('spring-service')) {
+            // copy files for the spring-service generator
+            this.template('generators/spring-service/_index.js', 'generators/spring-service/index.js');
+        }
     }
 
     end() {
@@ -191,10 +200,11 @@ ${chalk.red.bold('                 :::lie.:::')}\n`);
         this.log('To begin to work:');
         this.log(`- launch: ${chalk.yellow.bold('yarn install')} or ${chalk.yellow.bold('npm install')}`);
         this.log(`- link: ${chalk.yellow.bold('yarn link')} or ${chalk.yellow.bold('npm link')}`);
+        this.log(`- link JHipster: ${chalk.yellow.bold('yarn link generator-jhipster')} or ${chalk.yellow.bold('npm link generator-jhipster')}`);
         this.log('- test your module in a JHipster project: ');
-        this.log('    - go into your JHipster project');
-        this.log(`    - link to your module: ${chalk.yellow.bold(`yarn link generator-jhipster-${this.moduleName}`)} or ${chalk.yellow.bold(`npm link generator-jhipster-${this.moduleName}`)}`);
-        this.log(`    - launch your module: ${chalk.yellow.bold(`yo jhipster-${this.moduleName}`)}`);
+        this.log('    - create a new directory and go into it');
+        this.log(`    - link the blueprint: ${chalk.yellow.bold(`yarn link generator-jhipster-${this.moduleName}`)} or ${chalk.yellow.bold(`npm link generator-jhipster-${this.moduleName}`)}`);
+        this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprint ${this.moduleName}`)}`);
         this.log('- then, come back here, and begin to code!\n');
     }
 };

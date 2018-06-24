@@ -1,26 +1,25 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const EntityGenerator = require('generator-jhipster/generators/entity');
+const ServerGenerator = require('generator-jhipster/generators/server');
 
-
-module.exports = class extends EntityGenerator {
+module.exports = class extends ServerGenerator {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
         const jhContext = this.jhipsterContext = this.options.jhipsterContext;
 
         if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint generator-jhipster-sample-blueprint')}`);
+            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
         }
 
         this.configOptions = jhContext.configOptions || {};
         // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
+        jhContext.setupServerOptions(this, jhContext);
     }
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `EntityGenerator`
+         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -69,13 +68,18 @@ module.exports = class extends EntityGenerator {
         return super._configuring();
     }
 
+    get default() {
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._default();
+    }
+
     get writing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._writing();
     }
 
-    get install() {
+    get end() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._install();
+        return super._end();
     }
 };

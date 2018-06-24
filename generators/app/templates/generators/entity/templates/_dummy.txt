@@ -1,2 +1,0 @@
-hello <%= moduleName %>:entity sub generator!
-It's dummy.txt

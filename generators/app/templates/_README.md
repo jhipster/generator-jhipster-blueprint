@@ -44,12 +44,11 @@ npm update -g generator-jhipster-<%= moduleName %>
 
 # Usage
 
-## Blueprint rules and format
+To use this blueprint, run the below command
 
-1. Name of the generator should be of format generator-jhipster-<%= moduleName %>
-2. Should be installed either globally or locally
-3. Should have keywords <jhipster-blueprint> in package.json
-
+```bash
+jhipster --blueprint <%= moduleName %>
+```
 
 ## During development of this blueprint
 

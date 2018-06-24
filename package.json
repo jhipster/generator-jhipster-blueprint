@@ -1,0 +1,49 @@
+{
+  "name": "generator-jhipster-blueprint",
+  "version": "0.0.0",
+  "description": "JHipster module, used to create a JHipster blueprint",
+  "keywords": [
+    "yeoman-generator",
+    "jhipster-module"
+  ],
+  "homepage": "https://github.com/jhipster/generator-jhipster-blueprint",
+  "bugs": "https://github.com/jhipster/generator-jhipster-blueprint/issues",
+  "author": {
+    "name": "Deepu KS",
+    "email": "",
+    "url": "https://twitter.com/deepu105"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhipster/generator-jhipster-blueprint.git"
+  },
+  "dependencies": {
+    "chalk": "2.4.1",
+    "mkdirp": "0.5.1",
+    "yeoman-generator": "2.0.5"
+  },
+  "devDependencies": {
+    "eslint": "5.0.0",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-plugin-import": "2.12.0",
+    "fs-extra": "6.0.1",
+    "mocha": "5.2.0",
+    "yeoman-assert": "3.1.1",
+    "yeoman-test": "1.7.2"
+  },
+  "scripts": {
+    "pretest": "eslint .",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "release": "git push && git push --tags && npm publish",
+    "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
+    "test": "mocha test/* --slow 0 --reporter spec"
+  },
+  "license": "Apache-2.0"
+}

@@ -14,22 +14,45 @@ const expectedFiles = {
         '.travis.yml',
         'package.json',
         'README.md',
-        'test/templates/maven-angularX/.yo-rc.json',
-        'test/templates/gradle-angular1/.yo-rc.json',
-        'test/test-app.js',
-        'generators/app/index.js',
-        'generators/app/templates/dummy.txt'
+        // 'test/templates/maven-angularX/.yo-rc.json',
+        // 'test/templates/gradle-angular1/.yo-rc.json',
+        // 'test/test-app.js'
+    ],
+    client: [
+        'generators/client/index.js',
+        'generators/client/files.js',
+        'generators/client/prompts.js',
+        'generators/client/templates/_dummy.txt'
     ],
     entity: [
-        'generators/entity/index.js',
-        'generators/entity/templates/dummy.txt'
+        'generators/entity/index.js'
+    ],
+    'entity-client': [
+        'generators/entity-client/index.js'
+    ],
+    'entity-server': [
+        'generators/entity-server/index.js'
+    ],
+    'entity-i18n': [
+        'generators/entity-i18n/index.js'
+    ],
+    server: [
+        'generators/server/index.js'
+    ],
+    'spring-controller': [
+        'generators/spring-controller/index.js'
+    ],
+    'spring-service': [
+        'generators/spring-service/index.js'
     ],
     license: [
         'LICENSE'
     ]
 };
 
-describe('JHipster generator module', () => {
+const ALL_SUBGENS = ['client', 'entity', 'entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'];
+
+describe('JHipster generator blueprint', () => {
     describe('default configuration no license', () => {
         beforeEach((done) => {
             helpers
@@ -37,7 +60,7 @@ describe('JHipster generator module', () => {
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'none',
+                    blueprintSubs: [],
                     githubName: 'githubName',
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
@@ -52,8 +75,10 @@ describe('JHipster generator module', () => {
         it('doesn\'t generate license', () => {
             assert.noFile(expectedFiles.license);
         });
-        it('doesn\'t generate entity files', () => {
-            assert.noFile(expectedFiles.entity);
+        ALL_SUBGENS.forEach((subGen) => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+            });
         });
     });
 
@@ -64,7 +89,7 @@ describe('JHipster generator module', () => {
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'none',
+                    blueprintSubs: [],
                     githubName: 'githubName',
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
@@ -81,8 +106,10 @@ describe('JHipster generator module', () => {
             assert.fileContent('README.md', 'Apache-2.0');
             assert.fileContent('package.json', 'Apache-2.0');
         });
-        it('doesn\'t generate entity files', () => {
-            assert.noFile(expectedFiles.entity);
+        ALL_SUBGENS.forEach((subGen) => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+            });
         });
     });
 
@@ -92,7 +119,7 @@ describe('JHipster generator module', () => {
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'none',
+                    blueprintSubs: [],
                     githubName: 'githubName',
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
@@ -109,8 +136,10 @@ describe('JHipster generator module', () => {
             assert.fileContent('README.md', 'GPL-3.0');
             assert.fileContent('package.json', 'GPL-3.0');
         });
-        it('doesn\'t generate entity files', () => {
-            assert.noFile(expectedFiles.entity);
+        ALL_SUBGENS.forEach((subGen) => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+            });
         });
     });
 
@@ -121,7 +150,7 @@ describe('JHipster generator module', () => {
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'none',
+                    blueprintSubs: [],
                     githubName: 'githubName',
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
@@ -138,19 +167,21 @@ describe('JHipster generator module', () => {
             assert.fileContent('README.md', 'MIT');
             assert.fileContent('package.json', 'MIT');
         });
-        it('doesn\'t generate entity files', () => {
-            assert.noFile(expectedFiles.entity);
+        ALL_SUBGENS.forEach((subGen) => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+            });
         });
     });
 
-    describe('hook postEntity on default generator', () => {
+    describe('generate client and entity blueprint templates only', () => {
         beforeEach((done) => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'postEntity',
+                    blueprintSubs: ['client', 'entity'],
                     hookCallback: 'app',
                     githubName: 'githubName',
                     authorName: 'authorName',
@@ -164,20 +195,27 @@ describe('JHipster generator module', () => {
         it('generates default files', () => {
             assert.file(expectedFiles.module);
         });
-        it('doesn\'t generate entity files', () => {
-            assert.noFile(expectedFiles.entity);
+        it('generates client files', () => {
+            assert.file(expectedFiles.client);
+        });
+        it('generates entity files', () => {
+            assert.file(expectedFiles.entity);
+        });
+        ['entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'].forEach((subGen) => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+            });
         });
     });
-
-    describe('hook postEntity on entity', () => {
+    describe('generate all blueprint templates only', () => {
         beforeEach((done) => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
-                    hook: 'postEntity',
-                    hookCallback: 'entity',
+                    blueprintSubs: ALL_SUBGENS,
+                    hookCallback: 'app',
                     githubName: 'githubName',
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
@@ -186,11 +224,14 @@ describe('JHipster generator module', () => {
                 })
                 .on('end', done);
         });
+
         it('generates default files', () => {
             assert.file(expectedFiles.module);
         });
-        it('generates entity files', () => {
-            assert.file(expectedFiles.entity);
+        ALL_SUBGENS.forEach((subGen) => {
+            it(`generates ${subGen} files`, () => {
+                assert.file(expectedFiles[subGen]);
+            });
         });
     });
 });

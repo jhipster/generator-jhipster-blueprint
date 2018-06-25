@@ -16,6 +16,7 @@ script:
     - yarn test
     # generate default blueprint
     - mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
+    - yarn link generator-jhipster-blueprint
     - yo jhipster-blueprint default
     - yarn install
     - yarn link

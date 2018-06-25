@@ -6,6 +6,12 @@ const packagejs = require('../../package.json');
 module.exports = class extends Generator {
     get initializing() {
         return {
+            init(args) {
+                if (args === 'default') {
+                    this.default = true;
+                }
+            },
+
             displayLogo() {
                 this.log(chalk.white.bold('         http://www.jhipster.tech\n'));
                 this.log(chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`));
@@ -110,18 +116,34 @@ module.exports = class extends Generator {
             }
         ];
 
-        this.prompt(prompts).then((props) => {
-            this.props = props;
-            this.moduleName = props.moduleName;
-            this.moduleDescription = props.moduleDescription;
-            this.blueprintSubs = props.blueprintSubs;
-            this.githubName = props.githubName;
-            this.authorName = props.authorName;
-            this.authorEmail = props.authorEmail;
-            this.authorUrl = props.authorUrl;
-            this.license = props.license;
+        if (this.default) {
+            // generate default blueprint
+            this.moduleName = 'helloworld';
+            this.moduleDescription = 'Default Blueprint';
+            this.blueprintSubs = ['client', 'server', 'entity', 'entity-client', 'entity-server',
+                'entity-i18n', 'spring-controller', 'spring-service'];
+            this.githubName = 'jhipster-bot';
+            this.authorName = 'JHipster Bot';
+            this.authorEmail = 'jhipster@localhost';
+            this.authorUrl = 'https://twitter.com/java_hipster';
+            this.license = 'apache';
             done();
-        });
+        } else {
+            this.prompt(prompts).then((props) => {
+                this.props = props;
+                this.moduleName = props.moduleName;
+                this.moduleDescription = props.moduleDescription;
+                this.blueprintSubs = props.blueprintSubs;
+                this.githubName = props.githubName;
+                this.authorName = props.authorName;
+                this.authorEmail = props.authorEmail;
+                this.authorUrl = props.authorUrl;
+                this.license = props.license;
+
+                this.log(this.blueprintSubs);
+                done();
+            });
+        }
     }
 
     writing() {

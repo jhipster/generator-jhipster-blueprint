@@ -120,8 +120,8 @@ module.exports = class extends Generator {
             // generate default blueprint
             this.moduleName = 'helloworld';
             this.moduleDescription = 'Default Blueprint';
-            this.blueprintSubs = [ 'client', 'server', 'entity', 'entity-client', 'entity-server',
-                'entity-i18n', 'spring-controller', 'spring-service' ];
+            this.blueprintSubs = ['client', 'server', 'entity', 'entity-client', 'entity-server',
+                'entity-i18n', 'spring-controller', 'spring-service'];
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';

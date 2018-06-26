@@ -23,4 +23,5 @@ script:
     # generate a JHipster project, using blueprint
     - mkdir -p $HOME/app && cd $HOME/app
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/ngx-default/.yo-rc.json -o .yo-rc.json
+    - yarn link generator-jhipster-helloworld
     - jhipster --blueprint helloworld --force --no-insight

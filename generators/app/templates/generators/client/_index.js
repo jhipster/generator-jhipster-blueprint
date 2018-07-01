@@ -63,19 +63,19 @@ module.exports = class extends ClientGenerator {
 
     get prompting() {
         // The prompting phase is being overriden so that we can ask our own questions
-        return {
-            askForClient: prompts.askForClient,
-            askForClientSideOpts: prompts.askForClientSideOpts,
+        // return {
+        //     askForClient: prompts.askForClient,
+        //     askForClientSideOpts: prompts.askForClientSideOpts,
 
-            setSharedConfigOptions() {
-                this.configOptions.lastQuestion = this.currentQuestion;
-                this.configOptions.totalQuestions = this.totalQuestions;
-                this.configOptions.clientFramework = this.clientFramework;
-                this.configOptions.useSass = this.useSass;
-            }
-        };
+        //     setSharedConfigOptions() {
+        //         this.configOptions.lastQuestion = this.currentQuestion;
+        //         this.configOptions.totalQuestions = this.totalQuestions;
+        //         this.configOptions.clientFramework = this.clientFramework;
+        //         this.configOptions.useSass = this.useSass;
+        //     }
+        // };
         // If the prompts doesnt need to be overriden then use the below commented return instead
-        // return super._prompting();
+        return super._prompting();
     }
 
     get configuring() {
@@ -90,13 +90,13 @@ module.exports = class extends ClientGenerator {
 
     get writing() {
         // The writing phase is being overriden so that we can write our own templates
-        return {
-            write() {
-                writeFiles.call(this);
-            }
-        };
+        // return {
+        //     write() {
+        //         writeFiles.call(this);
+        //     }
+        // };
         // If the templates doesnt need to be overrriden then use the below commented return instead
-        // return super._writing();
+        return super._writing();
     }
 
     get install() {

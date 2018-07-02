@@ -1,18 +1,21 @@
 /* eslint-disable consistent-return */
-const chalk = require('chalk');
-const ClientGenerator = require('generator-jhipster/generators/client');
-const prompts = require('./prompts');
-const writeFiles = require('./files').writeFiles;
-
+const chalk = require("chalk");
+const ClientGenerator = require("generator-jhipster/generators/client");
+const prompts = require("./prompts");
+const writeFiles = require("./files").writeFiles;
 
 module.exports = class extends ClientGenerator {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
-        const jhContext = this.jhipsterContext = this.options.jhipsterContext;
+        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
 
         if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
+            this.error(
+                `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+                    "jhipster --blueprint <%= moduleName %>"
+                )}`
+            );
         }
 
         this.configOptions = jhContext.configOptions || {};
@@ -74,7 +77,7 @@ module.exports = class extends ClientGenerator {
         //         this.configOptions.useSass = this.useSass;
         //     }
         // };
-        // If the prompts doesnt need to be overriden then use the below commented return instead
+        // If the prompts need to be overriden then use the code commented out above instead
         return super._prompting();
     }
 
@@ -89,14 +92,15 @@ module.exports = class extends ClientGenerator {
     }
 
     get writing() {
-        // The writing phase is being overriden so that we can write our own templates
-        // return {
-        //     write() {
-        //         writeFiles.call(this);
-        //     }
-        // };
-        // If the templates doesnt need to be overrriden then use the below commented return instead
-        return super._writing();
+        // The writing phase is being overriden so that we can write our own templates as well.
+        // If the templates doesnt need to be overrriden then just return `super._writing()` here
+        const phaseFromJHipster = super._writing();
+        const customPhaseSteps = {
+            writeAdditionalFile() {
+                writeFiles.call(this);
+            }
+        };
+        return Object.assign(phaseFromJHipster, customPhaseSteps);
     }
 
     get install() {

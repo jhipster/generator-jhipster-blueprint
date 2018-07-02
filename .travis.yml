@@ -9,18 +9,32 @@ before_install:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - export PATH=$HOME/.yarn/bin:$PATH
 install:
-    - yarn global add generator-jhipster yo
+    - yarn global add yo
     - yarn install
     - yarn link
 script:
+    # ----- local tests
     - yarn test
+
+    # ----- integration tests
+    # clone generator-jhipster
+    - cd $HOME
+    - git clone https://github.com/jhipster/generator-jhipster generator-jhipster
+    - cd generator-jhipster
+    - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    - yarn install
+    - yarn link
+
     # generate default blueprint
     - mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
     - yarn link generator-jhipster-blueprint
     - yo jhipster-blueprint default
     - yarn install
     - yarn link
+    - yarn link generator-jhipster
+
     # generate a JHipster project, using blueprint
     - mkdir -p $HOME/app && cd $HOME/app
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/ngx-default/.yo-rc.json -o .yo-rc.json
+    - yarn link generator-jhipster-helloworld
     - jhipster --blueprint helloworld --force --no-insight

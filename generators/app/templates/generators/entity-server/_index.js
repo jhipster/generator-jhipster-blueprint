@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
+const EntityServerGenerator = require('generator-jhipster/generators/entity-server');
 
 
-module.exports = class extends EntityClientGenerator {
+module.exports = class extends EntityServerGenerator {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
@@ -21,7 +21,7 @@ module.exports = class extends EntityClientGenerator {
 
     get writing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `EntityClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `EntityServerGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *

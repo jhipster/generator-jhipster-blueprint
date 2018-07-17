@@ -34,7 +34,18 @@ script:
     - yarn link generator-jhipster
 
     # generate a JHipster project, using blueprint
-    - mkdir -p $HOME/app && cd $HOME/app
+    - mkdir -p $HOME/app/.jhipster/ && cd $HOME/app
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/ngx-default/.yo-rc.json -o .yo-rc.json
+    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
+    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Label.json -o .jhipster/Label.json
+    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Operation.json -o .jhipster/Operation.json
     - yarn link generator-jhipster-helloworld
     - jhipster --blueprint helloworld --force --no-insight
+    - jhipster entity BankAccount --force --skip-install
+    - jhipster entity Label --force --skip-install
+    - jhipster entity Operation --force --skip-install
+    - jhipster spring-controller Hello --default
+    - jhipster spring-service World --default
+    - yarn run webpack:build
+    - ./mvnw test
+    - yarn test

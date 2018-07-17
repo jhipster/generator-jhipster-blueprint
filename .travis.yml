@@ -19,8 +19,9 @@ script:
     # ----- integration tests
     # clone generator-jhipster
     - cd $HOME
-    - git clone https://github.com/jhipster/generator-jhipster generator-jhipster
+    - git clone https://github.com/pascalgrimaud/generator-jhipster generator-jhipster
     - cd generator-jhipster
+    - git checkout -b service-controller-default origin/service-controller-default
     - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     - yarn install
     - yarn link

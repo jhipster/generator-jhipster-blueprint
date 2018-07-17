@@ -37,7 +37,6 @@ script:
     # generate a JHipster project, using blueprint
     - mkdir -p $HOME/app/.jhipster/ && cd $HOME/app
     - cp "$JHIPSTER_TRAVIS"/travis/samples/ngx-blueprint/.yo-rc.json "$HOME"/app/
-    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/ngx-default/.yo-rc.json -o .yo-rc.json
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Label.json -o .jhipster/Label.json
     - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Operation.json -o .jhipster/Operation.json

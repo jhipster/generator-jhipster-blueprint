@@ -1,52 +1,76 @@
 os:
-    - linux
+  - linux
 language: node_js
 node_js:
-    - "8.11.3"
+  - "8.11.3"
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle
+env:
+  global:
+    - PROFILE=dev
+    - RUN_APP=1
+    - PROTRACTOR=0
+    - JHIPSTER_TRAVIS=$TRAVIS_BUILD_DIR/travis
+    - JHIPSTER_SAMPLES=$JHIPSTER_TRAVIS/samples
+    - JHIPSTER_SCRIPTS=$JHIPSTER_TRAVIS/scripts
+    - APP_FOLDER=$HOME/app
 before_install:
-    - npm install -g npm
-    # Repo for Yarn
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
+  - npm install -g npm
+  # Repo for Yarn
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
 install:
-    - yarn global add yo
-    - yarn install
-    - yarn link
+  - yarn global add yo
+  - yarn install
+  - yarn link
 script:
-    # ----- local tests
-    - yarn test
+  # ----- local tests
+  - yarn test
 
-    # ----- integration tests
-    # clone generator-jhipster
-    - cd $HOME
-    - git clone https://github.com/pascalgrimaud/generator-jhipster generator-jhipster
-    - cd generator-jhipster
-    - git checkout -b service-controller-default origin/service-controller-default
-    - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    - yarn install
-    - yarn link
+  # ----- integration tests
+  # clone generator-jhipster
+  - cd $HOME
+  - git clone https://github.com/pascalgrimaud/generator-jhipster generator-jhipster
+  - cd generator-jhipster
+  - git checkout -b service-controller-default origin/service-controller-default
+  - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  - yarn install
+  - yarn link
 
-    # generate default blueprint
-    - mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
-    - yarn link generator-jhipster-blueprint
-    - yo jhipster-blueprint default
-    - yarn install
-    - yarn link
-    - yarn link generator-jhipster
+  # generate default blueprint
+  - mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
+  - yarn link generator-jhipster-blueprint
+  - yo jhipster-blueprint default
+  - yarn install
+  - yarn link
+  - yarn link generator-jhipster
 
-    # generate a JHipster project, using blueprint
-    - mkdir -p $HOME/app/.jhipster/ && cd $HOME/app
-    - cp "$JHIPSTER_TRAVIS"/travis/samples/ngx-blueprint/.yo-rc.json "$HOME"/app/
-    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
-    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Label.json -o .jhipster/Label.json
-    - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Operation.json -o .jhipster/Operation.json
-    - yarn link generator-jhipster-helloworld
-    - jhipster --blueprint helloworld --force --no-insight
-    - jhipster entity BankAccount --force --skip-install
-    - jhipster entity Label --force --skip-install
-    - jhipster entity Operation --force --skip-install
-    - jhipster spring-controller Hello --default
-    - jhipster spring-service World --default
-    - yarn run webpack:build
-    - ./mvnw test
-    - yarn test
+  # force no insight
+  - mkdir -p "$HOME"/.config/configstore/
+  - cp "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
+
+  # generate a JHipster project, using blueprint
+  - mkdir -p "$APP_FOLDER"/.jhipster/ && cd "$APP_FOLDER"
+  - cp "$JHIPSTER_SAMPLES"/ngx-blueprint/.yo-rc.json "$HOME"/app/
+  - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
+  - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Label.json -o .jhipster/Label.json
+  - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Operation.json -o .jhipster/Operation.json
+
+  - yarn link generator-jhipster-helloworld
+  - jhipster --blueprint helloworld --force --no-insight
+  - jhipster entity BankAccount --force --skip-install
+  - jhipster entity Label --force --skip-install
+  - jhipster entity Operation --force --skip-install
+  - jhipster spring-controller Hello --default
+  - jhipster spring-service World --default
+  - yarn run webpack:build
+  - ./mvnw test
+  - yarn test

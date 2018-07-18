@@ -46,7 +46,7 @@ script:
   - yarn link
 
   # generate default blueprint
-  - mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
+  - mkdir -p $HOME/jhipster-helloworld && cd $HOME/jhipster-helloworld
   - yarn link generator-jhipster-blueprint
   - yo jhipster-blueprint default
   - yarn install
@@ -66,6 +66,8 @@ script:
 
   - yarn link generator-jhipster-helloworld
   - jhipster --blueprint helloworld --force --no-insight
+
+  - yarn link generator-jhipster-helloworld
   - jhipster entity BankAccount --force --skip-install
   - jhipster entity Label --force --skip-install
   - jhipster entity Operation --force --skip-install

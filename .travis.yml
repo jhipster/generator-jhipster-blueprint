@@ -38,9 +38,9 @@ script:
   # ----- integration tests
   # clone generator-jhipster
   - cd $HOME
-  - git clone https://github.com/pascalgrimaud/generator-jhipster generator-jhipster
+  - git clone https://github.com/jhipster/generator-jhipster generator-jhipster
   - cd generator-jhipster
-  - git checkout -b future-travis-blueprint origin/future-travis-blueprint 
+  # - git checkout -b future-travis-blueprint origin/future-travis-blueprint 
   - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   - yarn install
   - yarn link
@@ -67,7 +67,9 @@ script:
   - yarn link generator-jhipster-helloworld
   - jhipster --blueprint helloworld --force --no-insight
 
+  - yarn link generator-jhipster
   - yarn link generator-jhipster-helloworld
+
   - jhipster entity BankAccount --force --skip-install
   - jhipster entity Label --force --skip-install
   - jhipster entity Operation --force --skip-install

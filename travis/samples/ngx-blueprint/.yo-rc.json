@@ -1,0 +1,48 @@
+{
+    "generator-jhipster-helloworld": {
+        "promptValues": {
+            "packageName": "io.github.jhipster.blueprint"
+        },
+        "applicationType": "monolith",
+        "baseName": "jhipsterBlueprintApplication",
+        "packageName": "io.github.jhipster.blueprint",
+        "packageFolder": "io/github/jhipster/blueprint",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "h2Disk",
+        "prodDatabaseType": "mysql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": false,
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "55adc1a5cbb40cfc68084b2c30eddb447a164a3b",
+        "clientFramework": "angularX",
+        "useSass": false,
+        "clientPackageManager": "yarn"
+    },
+    "generator-jhipster": {
+        "promptValues": {
+            "nativeLanguage": "en"
+        },
+        "applicationType": "monolith",
+        "baseName": "jhipsterBlueprintApplication",
+        "testFrameworks": [
+            "gatling",
+            "protractor"
+        ],
+        "jhiPrefix": "jhi",
+        "enableTranslation": true,
+        "clientPackageManager": "yarn",
+        "nativeLanguage": "en",
+        "languages": [
+            "en",
+            "fr"
+        ],
+        "blueprint": "generator-jhipster-helloworld"
+    }
+}

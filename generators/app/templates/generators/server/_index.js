@@ -9,7 +9,11 @@ module.exports = class extends ServerGenerator {
         const jhContext = this.jhipsterContext = this.options.jhipsterContext;
 
         if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
+            this.error(
+                `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+                    "jhipster --blueprint <%= moduleName %>"
+                )}`
+            );
         }
 
         this.configOptions = jhContext.configOptions || {};

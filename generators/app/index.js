@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const packagejs = require('../../package.json');
+const { validateGitHubName, validateModuleName } = require('./input-validation');
 
 module.exports = class extends Generator {
     get initializing() {
@@ -25,7 +26,7 @@ module.exports = class extends Generator {
             {
                 type: 'input',
                 name: 'moduleName',
-                validate: input => (/^[a-zA-Z0-9-]+$/.test(input) ? true : 'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead'),
+                validate: validateModuleName,
                 message: 'What is the base name of your module?',
                 default: 'helloworld'
             },
@@ -76,10 +77,7 @@ module.exports = class extends Generator {
             {
                 type: 'input',
                 name: 'githubName',
-                validate: (input) => {
-                    if (/^([a-zA-Z0-9_]*)$/.test(input) && input !== '') return true;
-                    return 'Your username is mandatory, cannot contain special characters or a blank space';
-                },
+                validate: validateGitHubName,
                 store: true,
                 message: 'What is your GitHub username?',
             },

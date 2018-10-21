@@ -1,0 +1,66 @@
+const path = require('path');
+<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+const fse = require('fs-extra');
+<%_ } _%>
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
+
+describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster blueprint', () => {
+    describe('Sample test', () => {
+        before((done) => {
+            helpers
+                .run('generator-jhipster/generators/<%= subGenerator %>')
+<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+                .inTmpDir((dir) => {
+                    fse.copySync(path.join(__dirname, '../test/templates/ngx-blueprint'), dir);
+                })
+<%_ } _%>
+                .withOptions({
+                    'from-cli': true, skipInstall: true, blueprint: '<%= subGenerator %>', skipChecks: true
+                })
+                .withGenerators([
+                    [
+                        require('../generators/<%= subGenerator %>/index.js'), // eslint-disable-line global-require
+                        'jhipster-<%= moduleName %>:<%= subGenerator %>',
+                        path.join(__dirname, '../generators/<%= subGenerator %>/index.js')
+                    ]
+                ])
+<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+                .withArguments(['foo'])
+<%_ } _%>
+                .withPrompts({
+<%_ if (subGenerator === 'entity') { _%>
+                    fieldAdd: false,
+                    relationshipAdd: false,
+                    dto: 'no',
+                    service: 'no',
+                    pagination: 'infinite-scroll'
+<%_ } else if (subGenerator === 'spring-service') { _%>
+                    useInterface: false
+<%_ } else if (subGenerator === 'spring-controller') { _%>
+                    actionAdd: false
+<%_ } else { _%>
+                    baseName: 'sampleMysql',
+                    packageName: 'com.mycompany.myapp',
+                    applicationType: 'monolith',
+                    databaseType: 'sql',
+                    devDatabaseType: 'h2Disk',
+                    prodDatabaseType: 'mysql',
+                    cacheProvider: 'ehcache',
+                    authenticationType: 'session',
+                    enableTranslation: true,
+                    nativeLanguage: 'en',
+                    languages: ['fr', 'de'],
+                    buildTool: 'maven',
+                    rememberMeKey: '2bb60a80889aa6e6767e9ccd8714982681152aa5'
+<%_ } _%>
+                })
+                .on('end', done);
+        });
+
+        it('it works', () => {
+            // Adds your tests here
+            assert.textEqual('Write your own tests!', 'Write your own tests!');
+        });
+    });
+});

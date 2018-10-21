@@ -13,7 +13,8 @@ const expectedFiles = {
         '.gitignore',
         '.travis.yml',
         'package.json',
-        'README.md'
+        'README.md',
+        'test/templates/ngx-blueprint/.yo-rc.json'
     ],
     client: [
         'generators/client/index.js',
@@ -35,7 +36,7 @@ const ALL_SUBGENS = ['client', 'entity', 'entity-client', 'entity-i18n', 'entity
 
 describe('JHipster generator blueprint', () => {
     describe('default configuration no license', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -59,12 +60,13 @@ describe('JHipster generator blueprint', () => {
         ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
             });
         });
     });
 
     describe('default configuration license Apache', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -90,12 +92,13 @@ describe('JHipster generator blueprint', () => {
         ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
             });
         });
     });
 
     describe('default configuration license GNU GPLv3', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -121,12 +124,13 @@ describe('JHipster generator blueprint', () => {
         ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
             });
         });
     });
 
     describe('default configuration license MIT', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -152,12 +156,13 @@ describe('JHipster generator blueprint', () => {
         ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
             });
         });
     });
 
     describe('generate client and entity blueprint templates only', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -179,18 +184,21 @@ describe('JHipster generator blueprint', () => {
         });
         it('generates client files', () => {
             assert.file(expectedFiles.client);
+            assert.file(['test/client.spec.js']);
         });
         it('generates entity files', () => {
             assert.file(expectedFiles.entity);
+            assert.file(['test/entity.spec.js']);
         });
-        ['entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'].forEach(subGen => {
+        ALL_SUBGENS.filter(subGen => !['client', 'entity'].includes(subGen)).forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
             });
         });
     });
     describe('generate all blueprint templates only', () => {
-        beforeEach(done => {
+        before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -214,6 +222,11 @@ describe('JHipster generator blueprint', () => {
             it(`generates ${subGen} files`, () => {
                 assert.file(expectedFiles[subGen]);
             });
+            if (!subGen.startsWith('entity-')) {
+                it(`generates ${subGen} test files`, () => {
+                    assert.file([`test/${subGen}.spec.js`]);
+                });
+            }
         });
     });
 });

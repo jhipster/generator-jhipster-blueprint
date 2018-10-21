@@ -226,6 +226,12 @@ module.exports = class extends Generator {
             // copy files for the spring-service generator
             this.template('generators/spring-service/_index.js', 'generators/spring-service/index.js');
         }
+
+        this.blueprintSubs.filter(subGen => !subGen.startsWith('entity-')).forEach(subGenerator => {
+            this.subGenerator = subGenerator;
+            this.template('test/_subgen.spec.ejs', `test/${subGenerator}.spec.js`);
+        });
+        this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
     }
 
     end() {

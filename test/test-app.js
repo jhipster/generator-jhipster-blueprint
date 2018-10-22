@@ -9,6 +9,8 @@ const expectedFiles = {
         '.editorconfig',
         '.eslintignore',
         '.eslintrc.json',
+        '.prettierrc',
+        '.prettirignore',
         '.gitattributes',
         '.gitignore',
         '.travis.yml',

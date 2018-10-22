@@ -1,13 +1,6 @@
 const through = require('through2');
 const prettier = require('prettier');
-
-const prettierOptions = {
-    printWidth: 140,
-    singleQuote: true,
-    useTabs: false,
-    // js and ts rules:
-    arrowParens: 'avoid'
-};
+const prettierOptions = require('./templates/prettierrc.json');
 
 const prettierTransform = function(defaultOptions) {
     const transform = (file, encoding, callback) => {

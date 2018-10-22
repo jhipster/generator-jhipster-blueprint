@@ -1,10 +1,21 @@
 const chalk = require('chalk');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
+const filter = require('gulp-filter');
 const packagejs = require('../../package.json');
+const { prettierTransform, prettierOptions } = require('./generator-transforms');
 const { validateGitHubName, validateModuleName } = require('./input-validation');
 
 module.exports = class extends Generator {
+    constructor(args, opts) {
+        super(args, opts);
+
+        // Register file transforms for generated files, using Prettier
+        const prettierFilter = filter(['{generators,test}/**/*.{js,json}'], { restore: true });
+        // this pipe will pass through (restore) anything that doesn't match prettierFilter
+        this.registerTransformStream([prettierFilter, prettierTransform(prettierOptions), prettierFilter.restore]);
+    }
+
     get initializing() {
         return {
             init(args) {

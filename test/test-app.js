@@ -9,6 +9,8 @@ const expectedFiles = {
         '.editorconfig',
         '.eslintignore',
         '.eslintrc.json',
+        '.prettierrc',
+        '.prettirignore',
         '.gitattributes',
         '.gitignore',
         '.travis.yml',
@@ -21,37 +23,21 @@ const expectedFiles = {
         'generators/client/prompts.js',
         'generators/client/templates/_dummy.txt'
     ],
-    entity: [
-        'generators/entity/index.js'
-    ],
-    'entity-client': [
-        'generators/entity-client/index.js'
-    ],
-    'entity-server': [
-        'generators/entity-server/index.js'
-    ],
-    'entity-i18n': [
-        'generators/entity-i18n/index.js'
-    ],
-    server: [
-        'generators/server/index.js'
-    ],
-    'spring-controller': [
-        'generators/spring-controller/index.js'
-    ],
-    'spring-service': [
-        'generators/spring-service/index.js'
-    ],
-    license: [
-        'LICENSE'
-    ]
+    entity: ['generators/entity/index.js'],
+    'entity-client': ['generators/entity-client/index.js'],
+    'entity-server': ['generators/entity-server/index.js'],
+    'entity-i18n': ['generators/entity-i18n/index.js'],
+    server: ['generators/server/index.js'],
+    'spring-controller': ['generators/spring-controller/index.js'],
+    'spring-service': ['generators/spring-service/index.js'],
+    license: ['LICENSE']
 };
 
 const ALL_SUBGENS = ['client', 'entity', 'entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'];
 
 describe('JHipster generator blueprint', () => {
     describe('default configuration no license', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -69,10 +55,10 @@ describe('JHipster generator blueprint', () => {
         it('generates default files', () => {
             assert.file(expectedFiles.module);
         });
-        it('doesn\'t generate license', () => {
+        it("doesn't generate license", () => {
             assert.noFile(expectedFiles.license);
         });
-        ALL_SUBGENS.forEach((subGen) => {
+        ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
             });
@@ -80,7 +66,7 @@ describe('JHipster generator blueprint', () => {
     });
 
     describe('default configuration license Apache', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -103,7 +89,7 @@ describe('JHipster generator blueprint', () => {
             assert.fileContent('README.md', 'Apache-2.0');
             assert.fileContent('package.json', 'Apache-2.0');
         });
-        ALL_SUBGENS.forEach((subGen) => {
+        ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
             });
@@ -111,8 +97,9 @@ describe('JHipster generator blueprint', () => {
     });
 
     describe('default configuration license GNU GPLv3', () => {
-        beforeEach((done) => {
-            helpers.run(path.join(__dirname, '../generators/app'))
+        beforeEach(done => {
+            helpers
+                .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
@@ -133,7 +120,7 @@ describe('JHipster generator blueprint', () => {
             assert.fileContent('README.md', 'GPL-3.0');
             assert.fileContent('package.json', 'GPL-3.0');
         });
-        ALL_SUBGENS.forEach((subGen) => {
+        ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
             });
@@ -141,7 +128,7 @@ describe('JHipster generator blueprint', () => {
     });
 
     describe('default configuration license MIT', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -164,7 +151,7 @@ describe('JHipster generator blueprint', () => {
             assert.fileContent('README.md', 'MIT');
             assert.fileContent('package.json', 'MIT');
         });
-        ALL_SUBGENS.forEach((subGen) => {
+        ALL_SUBGENS.forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
             });
@@ -172,7 +159,7 @@ describe('JHipster generator blueprint', () => {
     });
 
     describe('generate client and entity blueprint templates only', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -198,14 +185,14 @@ describe('JHipster generator blueprint', () => {
         it('generates entity files', () => {
             assert.file(expectedFiles.entity);
         });
-        ['entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'].forEach((subGen) => {
+        ['entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'].forEach(subGen => {
             it(`doesn't generate ${subGen} files`, () => {
                 assert.noFile(expectedFiles[subGen]);
             });
         });
     });
     describe('generate all blueprint templates only', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
                 .withPrompts({
@@ -225,7 +212,7 @@ describe('JHipster generator blueprint', () => {
         it('generates default files', () => {
             assert.file(expectedFiles.module);
         });
-        ALL_SUBGENS.forEach((subGen) => {
+        ALL_SUBGENS.forEach(subGen => {
             it(`generates ${subGen} files`, () => {
                 assert.file(expectedFiles[subGen]);
             });

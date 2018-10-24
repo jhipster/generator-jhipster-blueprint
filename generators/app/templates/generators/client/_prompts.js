@@ -1,4 +1,3 @@
-
 module.exports = {
     askForClient,
     askForClientSideOpts
@@ -19,11 +18,12 @@ function askForClient(meta) {
     const PROMPT = {
         type: 'list',
         name: 'clientFramework',
-        when: response => (applicationType !== 'microservice' && applicationType !== 'uaa'),
-        message: response => this.getNumberedQuestion(
-            'Which *Framework* would you like to use for the client?',
-            applicationType !== 'microservice' && applicationType !== 'uaa'
-        ),
+        when: response => applicationType !== 'microservice' && applicationType !== 'uaa',
+        message: response =>
+            this.getNumberedQuestion(
+                'Which *Framework* would you like to use for the client?',
+                applicationType !== 'microservice' && applicationType !== 'uaa'
+            ),
         choices,
         default: 'vue'
     };
@@ -32,7 +32,7 @@ function askForClient(meta) {
 
     const done = this.async();
 
-    this.prompt(PROMPT).then((prompt) => {
+    this.prompt(PROMPT).then(prompt => {
         this.clientFramework = prompt.clientFramework;
         done();
     });
@@ -50,7 +50,7 @@ function askForClientSideOpts() {
             default: false
         }
     ];
-    this.prompt(prompts).then((props) => {
+    this.prompt(prompts).then(props => {
         this.useSass = props.useSass;
         done();
     });

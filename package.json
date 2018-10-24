@@ -23,13 +23,18 @@
   },
   "dependencies": {
     "chalk": "2.4.1",
+    "gulp-filter": "5.1.0",
     "mkdirp": "0.5.1",
+    "prettier": "1.14.3",
+    "through2": "2.0.3",
     "yeoman-generator": "2.0.5"
   },
   "devDependencies": {
     "eslint": "5.0.0",
     "eslint-config-airbnb-base": "13.0.0",
+    "eslint-config-prettier": "3.1.0",
     "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-prettier": "3.0.0",
     "fs-extra": "6.0.1",
     "mocha": "5.2.0",
     "yeoman-assert": "3.1.1",

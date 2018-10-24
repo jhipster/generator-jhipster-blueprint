@@ -1,10 +1,21 @@
 const chalk = require('chalk');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
+const filter = require('gulp-filter');
 const packagejs = require('../../package.json');
+const { prettierTransform, prettierOptions } = require('./generator-transforms');
 const { validateGitHubName, validateModuleName } = require('./input-validation');
 
 module.exports = class extends Generator {
+    constructor(args, opts) {
+        super(args, opts);
+
+        // Register file transforms for generated files, using Prettier
+        const prettierFilter = filter(['{generators,test}/**/*.{js,json}'], { restore: true });
+        // this pipe will pass through (restore) anything that doesn't match prettierFilter
+        this.registerTransformStream([prettierFilter, prettierTransform(prettierOptions), prettierFilter.restore]);
+    }
+
     get initializing() {
         return {
             init(args) {
@@ -15,7 +26,9 @@ module.exports = class extends Generator {
 
             displayLogo() {
                 this.log(chalk.white.bold('         http://www.jhipster.tech\n'));
-                this.log(chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`));
+                this.log(
+                    chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
+                );
             }
         };
     }
@@ -79,7 +92,7 @@ module.exports = class extends Generator {
                 name: 'githubName',
                 validate: validateGitHubName,
                 store: true,
-                message: 'What is your GitHub username?',
+                message: 'What is your GitHub username?'
             },
             {
                 type: 'input',
@@ -118,8 +131,16 @@ module.exports = class extends Generator {
             // generate default blueprint
             this.moduleName = 'helloworld';
             this.moduleDescription = 'Default Blueprint';
-            this.blueprintSubs = ['client', 'server', 'entity', 'entity-client', 'entity-server',
-                'entity-i18n', 'spring-controller', 'spring-service'];
+            this.blueprintSubs = [
+                'client',
+                'server',
+                'entity',
+                'entity-client',
+                'entity-server',
+                'entity-i18n',
+                'spring-controller',
+                'spring-service'
+            ];
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';
@@ -127,7 +148,7 @@ module.exports = class extends Generator {
             this.license = 'apache';
             done();
         } else {
-            this.prompt(prompts).then((props) => {
+            this.prompt(prompts).then(props => {
                 this.props = props;
                 this.moduleName = props.moduleName;
                 this.moduleDescription = props.moduleDescription;
@@ -146,18 +167,16 @@ module.exports = class extends Generator {
 
     writing() {
         // function to use directly template
-        this.template = function (source, destination) {
-            this.fs.copyTpl(
-                this.templatePath(source),
-                this.destinationPath(destination),
-                this
-            );
+        this.template = function(source, destination) {
+            this.fs.copyTpl(this.templatePath(source), this.destinationPath(destination), this);
         };
 
         // copy general files
         this.template('editorconfig', '.editorconfig');
         this.template('eslintignore', '.eslintignore');
         this.template('eslintrc.json', '.eslintrc.json');
+        this.template('prettierrc.json', '.prettierrc');
+        this.template('prettirignore', '.prettirignore');
         this.template('gitattributes', '.gitattributes');
         this.template('gitignore', '.gitignore');
         this.template('_travis.yml', '.travis.yml');
@@ -214,10 +233,16 @@ module.exports = class extends Generator {
         this.log('To begin to work:');
         this.log(`- launch: ${chalk.yellow.bold('yarn install')} or ${chalk.yellow.bold('npm install')}`);
         this.log(`- link: ${chalk.yellow.bold('yarn link')} or ${chalk.yellow.bold('npm link')}`);
-        this.log(`- link JHipster: ${chalk.yellow.bold('yarn link generator-jhipster')} or ${chalk.yellow.bold('npm link generator-jhipster')}`);
+        this.log(
+            `- link JHipster: ${chalk.yellow.bold('yarn link generator-jhipster')} or ${chalk.yellow.bold('npm link generator-jhipster')}`
+        );
         this.log('- test your module in a JHipster project: ');
         this.log('    - create a new directory and go into it');
-        this.log(`    - link the blueprint: ${chalk.yellow.bold(`yarn link generator-jhipster-${this.moduleName}`)} or ${chalk.yellow.bold(`npm link generator-jhipster-${this.moduleName}`)}`);
+        this.log(
+            `    - link the blueprint: ${chalk.yellow.bold(`yarn link generator-jhipster-${this.moduleName}`)} or ${chalk.yellow.bold(
+                `npm link generator-jhipster-${this.moduleName}`
+            )}`
+        );
         this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprint ${this.moduleName}`)}`);
         this.log('- then, come back here, and begin to code!\n');
     }

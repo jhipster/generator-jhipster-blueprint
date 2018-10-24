@@ -1,8 +1,7 @@
 /* eslint-disable consistent-return */
-const chalk = require("chalk");
-const ClientGenerator = require("generator-jhipster/generators/client");
-const prompts = require("./prompts");
-const writeFiles = require("./files").writeFiles;
+const chalk = require('chalk');
+const ClientGenerator = require('generator-jhipster/generators/client');
+const writeFiles = require('./files').writeFiles;
 
 module.exports = class extends ClientGenerator {
     constructor(args, opts) {
@@ -12,9 +11,7 @@ module.exports = class extends ClientGenerator {
 
         if (!jhContext) {
             this.error(
-                `This is a JHipster blueprint and should be used only like ${chalk.yellow(
-                    "jhipster --blueprint <%= moduleName %>"
-                )}`
+                `This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`
             );
         }
 

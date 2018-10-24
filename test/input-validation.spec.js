@@ -7,15 +7,24 @@ describe('input validation', () => {
     describe('validateModuleName', () => {
         it('for invalid syntax: sample_blueprint', () => {
             const result = validateModuleName('sample_blueprint');
-            assert(result === 'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead');
+            assert(
+                result ===
+                    'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead'
+            );
         });
         it('for invalid syntax: sample blueprint', () => {
             const result = validateModuleName('sample blueprint');
-            assert(result === 'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead');
+            assert(
+                result ===
+                    'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead'
+            );
         });
         it('for invalid syntax: sample!blueprint', () => {
             const result = validateModuleName('sample!blueprint');
-            assert(result === 'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead');
+            assert(
+                result ===
+                    'Your blueprint name is mandatory, cannot contain special characters or a blank space, using the default name instead'
+            );
         });
         it('for valid syntax: sample-blueprint', () => {
             const result = validateModuleName('sample-blueprint');

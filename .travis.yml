@@ -2,7 +2,7 @@ os:
   - linux
 language: node_js
 node_js:
-  - "8.11.3"
+  - "10.13.0"
 addons:
   apt:
     sources:
@@ -12,7 +12,6 @@ addons:
 cache:
   directories:
     - $HOME/.m2
-    - $HOME/.gradle
 env:
   global:
     - PROFILE=dev
@@ -23,35 +22,34 @@ env:
     - JHIPSTER_SCRIPTS=$JHIPSTER_TRAVIS/scripts
     - APP_FOLDER=$HOME/app
 before_install:
+  # Update NPM
   - npm install -g npm
-  # Repo for Yarn
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
 install:
-  - yarn global add yo
-  - yarn install
-  - yarn link
+  - npm install -g yo
+  - npm install
+  - npm link
 script:
   # ----- local tests
-  - yarn test
+  - npm test
 
   # ----- integration tests
   # clone generator-jhipster
   - cd $HOME
   - git clone https://github.com/jhipster/generator-jhipster generator-jhipster
   - cd generator-jhipster
-  # - git checkout -b future-travis-blueprint origin/future-travis-blueprint 
+  # - git checkout -b future-travis-blueprint origin/future-travis-blueprint
   - git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  - yarn install
-  - yarn link
+  - npm install
+  - npm link
 
   # generate default blueprint
   - mkdir -p $HOME/jhipster-helloworld && cd $HOME/jhipster-helloworld
-  - yarn link generator-jhipster-blueprint
+  - npm link generator-jhipster-blueprint
   - yo jhipster-blueprint default
-  - yarn install
-  - yarn link
-  - yarn link generator-jhipster
+  - npm install
+  # - npm test
+  - npm link
+  - npm link generator-jhipster
 
   # force no insight
   - mkdir -p "$HOME"/.config/configstore/
@@ -64,17 +62,14 @@ script:
   - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Label.json -o .jhipster/Label.json
   - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/travis/samples/.jhipster/Operation.json -o .jhipster/Operation.json
 
-  - yarn link generator-jhipster-helloworld
+  - npm link generator-jhipster
+  - npm link generator-jhipster-helloworld
   - jhipster --blueprint helloworld --force --no-insight
-
-  - yarn link generator-jhipster
-  - yarn link generator-jhipster-helloworld
 
   - jhipster entity BankAccount --force --skip-install
   - jhipster entity Label --force --skip-install
   - jhipster entity Operation --force --skip-install
   - jhipster spring-controller Hello --default
   - jhipster spring-service World --default
-  - yarn run webpack:build
   - ./mvnw test
-  - yarn test
+  - npm test

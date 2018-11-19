@@ -231,7 +231,9 @@ module.exports = class extends Generator {
             this.subGenerator = subGenerator;
             this.template('test/_subgen.spec.ejs', `test/${subGenerator}.spec.js`);
         });
-        this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+        if (this.blueprintSubs.find(subGen => ['entity', 'spring-controller', 'spring-service'].includes(subGen))) {
+            this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+        }
     }
 
     end() {

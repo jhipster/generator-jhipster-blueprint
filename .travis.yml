@@ -47,7 +47,7 @@ script:
   - npm link generator-jhipster-blueprint
   - yo jhipster-blueprint default
   - npm install
-  # - npm test
+  - npm test
   - npm link
   - npm link generator-jhipster
 

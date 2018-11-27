@@ -3,34 +3,20 @@
 > JHipster module, used to create a JHipster blueprint
 
 <div align="center">
-    <a href="http://jhipster.github.io">
-        <img src="https://github.com/jhipster/generator-jhipster-blueprint/raw/master/images/logo-jhipster.png">
+    <a href="https://www.jhipster.tech">
+        <img src="https://github.com/jhipster/jhipster-artwork/blob/master/logos/JHipster%20RGB-small100x25px.png?raw=true">
     </a>
 </div>
 
 # Introduction
 
-This is **not really** a [JHipster](http://jhipster.github.io/) module, that is meant to **not** be used in a JHipster application. This module is used to generate a template for coding a new JHipster blueprint. A JHipster module to create a JHipster blueprint.
+This is **not really** a [JHipster](https://www.jhipster.tech) module, that is meant to **not** be used in a JHipster application. This module is used to generate a template for coding a new JHipster blueprint. A JHipster module to create a JHipster blueprint.
 
 # Prerequisites
 
-Reading this [JHipster blueprint](https://jhipster.github.io/modules/creating_a_blueprint.html)
+Reading this [JHipster blueprint](https://www.jhipster.tech/modules/creating-a-blueprint/)
 
 # Installation
-
-## With Yarn
-
-To install this module:
-
-```bash
-yarn global add generator-jhipster-blueprint
-```
-
-To update this module:
-
-```bash
-yarn global upgrade generator-jhipster-blueprint
-```
 
 ## With NPM
 
@@ -44,6 +30,20 @@ To update this module:
 
 ```bash
 npm update -g generator-jhipster-blueprint
+```
+
+## With Yarn
+
+To install this module:
+
+```bash
+yarn global add generator-jhipster-blueprint
+```
+
+To update this module:
+
+```bash
+yarn global upgrade generator-jhipster-blueprint
 ```
 
 # Usage

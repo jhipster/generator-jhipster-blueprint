@@ -1,5 +1,5 @@
 const path = require('path');
-<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+<%_ if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
 const fse = require('fs-extra');
 <%_ } _%>
 const assert = require('yeoman-assert');
@@ -10,7 +10,7 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
         before((done) => {
             helpers
                 .run('generator-jhipster/generators/<%= subGenerator %>')
-<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+<%_ if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
                 .inTmpDir((dir) => {
                     fse.copySync(path.join(__dirname, '../test/templates/ngx-blueprint'), dir);
                 })

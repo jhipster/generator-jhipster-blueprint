@@ -26,13 +26,24 @@ const expectedFiles = {
     'entity-client': ['generators/entity-client/index.js'],
     'entity-server': ['generators/entity-server/index.js'],
     'entity-i18n': ['generators/entity-i18n/index.js'],
+    languages: ['generators/languages/index.js'],
     server: ['generators/server/index.js'],
     'spring-controller': ['generators/spring-controller/index.js'],
     'spring-service': ['generators/spring-service/index.js'],
     license: ['LICENSE']
 };
 
-const ALL_SUBGENS = ['client', 'entity', 'entity-client', 'entity-i18n', 'entity-server', 'server', 'spring-controller', 'spring-service'];
+const ALL_SUBGENS = [
+    'client',
+    'entity',
+    'entity-client',
+    'entity-i18n',
+    'entity-server',
+    'languages',
+    'server',
+    'spring-controller',
+    'spring-service'
+];
 
 describe('JHipster generator blueprint', () => {
     describe('default configuration no license', () => {

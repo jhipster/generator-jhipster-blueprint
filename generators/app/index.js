@@ -78,6 +78,10 @@ module.exports = class extends Generator {
                         value: 'entity-i18n'
                     },
                     {
+                        name: 'languages',
+                        value: 'languages'
+                    },
+                    {
                         name: 'spring-controller',
                         value: 'spring-controller'
                     },
@@ -138,6 +142,7 @@ module.exports = class extends Generator {
                 'entity-client',
                 'entity-server',
                 'entity-i18n',
+                'languages',
                 'spring-controller',
                 'spring-service'
             ];
@@ -218,6 +223,9 @@ module.exports = class extends Generator {
             // copy files for the entity-i18n generator
             this.template('generators/entity-i18n/_index.js', 'generators/entity-i18n/index.js');
         }
+        if (this.blueprintSubs.includes('languages')) {
+            this.template('generators/languages/_index.js', 'generators/languages/index.js');
+        }
         if (this.blueprintSubs.includes('spring-controller')) {
             // copy files for the spring-controller generator
             this.template('generators/spring-controller/_index.js', 'generators/spring-controller/index.js');
@@ -231,7 +239,7 @@ module.exports = class extends Generator {
             this.subGenerator = subGenerator;
             this.template('test/_subgen.spec.ejs', `test/${subGenerator}.spec.js`);
         });
-        if (this.blueprintSubs.find(subGen => ['entity', 'spring-controller', 'spring-service'].includes(subGen))) {
+        if (this.blueprintSubs.find(subGen => ['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGen))) {
             this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
         }
     }

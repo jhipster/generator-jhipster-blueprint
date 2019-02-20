@@ -54,6 +54,10 @@ module.exports = class extends Generator {
                 message: 'Which sub-generators do you want to override?',
                 choices: [
                     {
+                        name: 'common',
+                        value: 'common'
+                    },
+                    {
                         name: 'client',
                         value: 'client'
                     },
@@ -138,6 +142,7 @@ module.exports = class extends Generator {
             this.blueprintSubs = [
                 'client',
                 'server',
+                'common',
                 'entity',
                 'entity-client',
                 'entity-server',
@@ -206,6 +211,10 @@ module.exports = class extends Generator {
         if (this.blueprintSubs.includes('server')) {
             // copy files for the server generator
             this.template('generators/server/_index.js', 'generators/server/index.js');
+        }
+        if (this.blueprintSubs.includes('common')) {
+            // copy files for the common generator
+            this.template('generators/common/_index.js', 'generators/common/index.js');
         }
         if (this.blueprintSubs.includes('entity')) {
             // copy files for the entity generator

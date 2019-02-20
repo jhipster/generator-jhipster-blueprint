@@ -19,7 +19,7 @@ module.exports = class extends EntityI18nGenerator {
 
     get writing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `EntityClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `EntityI18nGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *

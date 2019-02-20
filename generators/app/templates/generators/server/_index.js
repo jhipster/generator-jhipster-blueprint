@@ -21,7 +21,7 @@ module.exports = class extends ServerGenerator {
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `ServerGenerator`
          *
          * There are multiple ways to customize a phase from JHipster.
          *

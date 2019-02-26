@@ -22,6 +22,17 @@ module.exports = class extends Generator {
                 if (args === 'default') {
                     this.default = true;
                 }
+                this.generators = {
+                    server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
+                    client: { name: 'ClientGenerator', path: 'generator-jhipster/generators/client' },
+                    entity: { name: 'EntityGenerator', path: 'generator-jhipster/generators/entity' },
+                    'entity-client': { name: 'EntityClientGenerator', path: 'generator-jhipster/generators/entity-client' },
+                    'entity-server': { name: 'EntityServerGenerator', path: 'generator-jhipster/generators/entity-server' },
+                    'entity-i18n': { name: 'EntityI18nGenerator', path: 'generator-jhipster/generators/entity-i18n' },
+                    languages: { name: 'LanguagesGenerator', path: 'generator-jhipster/generators/languages' },
+                    'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
+                    'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' }
+                };
             },
 
             displayLogo() {
@@ -195,45 +206,16 @@ module.exports = class extends Generator {
         }
         this.template('_README.md', 'README.md');
 
-        if (this.blueprintSubs.includes('client')) {
-            // copy files for the client generator
-            mkdirp('generators/client/templates');
-            this.template('generators/client/_index.js', 'generators/client/index.js');
-            this.template('generators/client/_files.js', 'generators/client/files.js');
-            this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
-            this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
-        }
-        if (this.blueprintSubs.includes('server')) {
-            // copy files for the server generator
-            this.template('generators/server/_index.js', 'generators/server/index.js');
-        }
-        if (this.blueprintSubs.includes('entity')) {
-            // copy files for the entity generator
-            this.template('generators/entity/_index.js', 'generators/entity/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-client')) {
-            // copy files for the entity-client generator
-            this.template('generators/entity-client/_index.js', 'generators/entity-client/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-server')) {
-            // copy files for the entity-server generator
-            this.template('generators/entity-server/_index.js', 'generators/entity-server/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-i18n')) {
-            // copy files for the entity-i18n generator
-            this.template('generators/entity-i18n/_index.js', 'generators/entity-i18n/index.js');
-        }
-        if (this.blueprintSubs.includes('languages')) {
-            this.template('generators/languages/_index.js', 'generators/languages/index.js');
-        }
-        if (this.blueprintSubs.includes('spring-controller')) {
-            // copy files for the spring-controller generator
-            this.template('generators/spring-controller/_index.js', 'generators/spring-controller/index.js');
-        }
-        if (this.blueprintSubs.includes('spring-service')) {
-            // copy files for the spring-service generator
-            this.template('generators/spring-service/_index.js', 'generators/spring-service/index.js');
-        }
+        this.blueprintSubs.forEach(generator => {
+            this.currentGenerator = generator;
+            if (generator === 'client') {
+                mkdirp('generators/client/templates');
+                this.template('generators/client/_files.js', 'generators/client/files.js');
+                this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
+                this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
+            }
+            this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);
+        });
 
         this.blueprintSubs.filter(subGen => !subGen.startsWith('entity-')).forEach(subGenerator => {
             this.subGenerator = subGenerator;

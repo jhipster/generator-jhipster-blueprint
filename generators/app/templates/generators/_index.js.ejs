@@ -1,8 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const LanguagesGenerator = require('generator-jhipster/generators/languages');
+const <%= generators[currentGenerator].name %> = require('<%= generators[currentGenerator].path %>');
+<% if(currentGenerator === 'client') {%> const writeFiles = require('./files').writeFiles; <% } %>
 
-module.exports = class extends LanguagesGenerator {
+module.exports = class extends <%= generators[currentGenerator].name %> {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
@@ -21,7 +22,7 @@ module.exports = class extends LanguagesGenerator {
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `<%= generators[currentGenerator].name %>`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -61,6 +62,21 @@ module.exports = class extends LanguagesGenerator {
     }
 
     get prompting() {
+        <% if(currentGenerator === 'client') {%>
+        // The prompting phase is being overriden so that we can ask our own questions
+        // return {
+        //     askForClient: prompts.askForClient,
+        //     askForClientSideOpts: prompts.askForClientSideOpts,
+
+        //     setSharedConfigOptions() {
+        //         this.configOptions.lastQuestion = this.currentQuestion;
+        //         this.configOptions.totalQuestions = this.totalQuestions;
+        //         this.configOptions.clientFramework = this.clientFramework;
+        //         this.configOptions.useSass = this.useSass;
+        //     }
+        // };
+        // If the prompts need to be overriden then use the code commented out above instead
+        <% } %>
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._prompting();
     }
@@ -76,8 +92,20 @@ module.exports = class extends LanguagesGenerator {
     }
 
     get writing() {
+        <% if (currentGenerator === 'client') {%>
+        // The writing phase is being overriden so that we can write our own templates as well.
+        // If the templates doesnt need to be overrriden then just return `super._writing()` here
+        const phaseFromJHipster = super._writing();
+        const customPhaseSteps = {
+            writeAdditionalFile() {
+                writeFiles.call(this);
+            }
+        };
+        return Object.assign(phaseFromJHipster, customPhaseSteps);
+        <% } else { %>
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._writing();
+        <% } %>
     }
 
     get end() {

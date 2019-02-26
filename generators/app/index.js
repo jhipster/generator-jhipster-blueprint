@@ -25,6 +25,7 @@ module.exports = class extends Generator {
                 this.generators = {
                     server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
                     client: { name: 'ClientGenerator', path: 'generator-jhipster/generators/client' },
+                    common: { name: 'CommonGenerator', path: 'generator-jhipster/generators/common' },
                     entity: { name: 'EntityGenerator', path: 'generator-jhipster/generators/entity' },
                     'entity-client': { name: 'EntityClientGenerator', path: 'generator-jhipster/generators/entity-client' },
                     'entity-server': { name: 'EntityServerGenerator', path: 'generator-jhipster/generators/entity-server' },
@@ -71,6 +72,10 @@ module.exports = class extends Generator {
                     {
                         name: 'server',
                         value: 'server'
+                    },
+                    {
+                        name: 'common',
+                        value: 'common'
                     },
                     {
                         name: 'entity',
@@ -149,6 +154,7 @@ module.exports = class extends Generator {
             this.blueprintSubs = [
                 'client',
                 'server',
+                'common',
                 'entity',
                 'entity-client',
                 'entity-server',

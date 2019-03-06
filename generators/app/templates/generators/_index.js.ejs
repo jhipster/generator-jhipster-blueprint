@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const <%= generators[currentGenerator].name %> = require('<%= generators[currentGenerator].path %>');
-<% if(currentGenerator === 'client') {%> const writeFiles = require('./files').writeFiles; <% } %>
+const <%= generators[subGenerator].name %> = require('<%= generators[subGenerator].path %>');
+<% if(subGenerator === 'client') {%> const writeFiles = require('./files').writeFiles; <% } %>
 
-module.exports = class extends <%= generators[currentGenerator].name %> {
+module.exports = class extends <%= generators[subGenerator].name %> {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
@@ -22,7 +22,7 @@ module.exports = class extends <%= generators[currentGenerator].name %> {
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `<%= generators[currentGenerator].name %>`
+         * Any method beginning with _ can be reused from the superclass `<%= generators[subGenerator].name %>`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -62,7 +62,7 @@ module.exports = class extends <%= generators[currentGenerator].name %> {
     }
 
     get prompting() {
-        <% if(currentGenerator === 'client') {%>
+        <% if(subGenerator === 'client') {%>
         // The prompting phase is being overriden so that we can ask our own questions
         // return {
         //     askForClient: prompts.askForClient,
@@ -92,7 +92,7 @@ module.exports = class extends <%= generators[currentGenerator].name %> {
     }
 
     get writing() {
-        <% if (currentGenerator === 'client') {%>
+        <% if (subGenerator === 'client') {%>
         // The writing phase is being overriden so that we can write our own templates as well.
         // If the templates doesnt need to be overrriden then just return `super._writing()` here
         const phaseFromJHipster = super._writing();

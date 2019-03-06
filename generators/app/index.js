@@ -213,23 +213,23 @@ module.exports = class extends Generator {
         this.template('_README.md', 'README.md');
 
         this.blueprintSubs.forEach(generator => {
-            this.currentGenerator = generator;
+            this.subGenerator = generator;
+
             if (generator === 'client') {
                 mkdirp('generators/client/templates');
                 this.template('generators/client/_files.js', 'generators/client/files.js');
                 this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
                 this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
             }
+            if (!generator.startsWith('entity-')) {
+                this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
+            }
+            if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(generator)) {
+                this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+            }
+
             this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);
         });
-
-        this.blueprintSubs.filter(subGen => !subGen.startsWith('entity-')).forEach(subGenerator => {
-            this.subGenerator = subGenerator;
-            this.template('test/_subgen.spec.ejs', `test/${subGenerator}.spec.js`);
-        });
-        if (this.blueprintSubs.find(subGen => ['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGen))) {
-            this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
-        }
     }
 
     end() {

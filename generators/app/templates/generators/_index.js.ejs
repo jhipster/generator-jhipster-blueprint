@@ -108,6 +108,11 @@ module.exports = class extends <%= generators[subGenerator].name %> {
         <% } %>
     }
 
+    get install() {
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._install();
+    }
+
     get end() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._end();

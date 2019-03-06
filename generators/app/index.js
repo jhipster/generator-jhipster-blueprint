@@ -64,48 +64,7 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'blueprintSubs',
                 message: 'Which sub-generators do you want to override?',
-                choices: [
-                    {
-                        name: 'client',
-                        value: 'client'
-                    },
-                    {
-                        name: 'server',
-                        value: 'server'
-                    },
-                    {
-                        name: 'common',
-                        value: 'common'
-                    },
-                    {
-                        name: 'entity',
-                        value: 'entity'
-                    },
-                    {
-                        name: 'entity-client',
-                        value: 'entity-client'
-                    },
-                    {
-                        name: 'entity-server',
-                        value: 'entity-server'
-                    },
-                    {
-                        name: 'entity-i18n',
-                        value: 'entity-i18n'
-                    },
-                    {
-                        name: 'languages',
-                        value: 'languages'
-                    },
-                    {
-                        name: 'spring-controller',
-                        value: 'spring-controller'
-                    },
-                    {
-                        name: 'spring-service',
-                        value: 'spring-service'
-                    }
-                ]
+                choices: Object.keys(this.generators)
             },
             {
                 type: 'input',
@@ -151,18 +110,7 @@ module.exports = class extends Generator {
             // generate default blueprint
             this.moduleName = 'helloworld';
             this.moduleDescription = 'Default Blueprint';
-            this.blueprintSubs = [
-                'client',
-                'server',
-                'common',
-                'entity',
-                'entity-client',
-                'entity-server',
-                'entity-i18n',
-                'languages',
-                'spring-controller',
-                'spring-service'
-            ];
+            this.blueprintSubs = Object.keys(this.generators);
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';

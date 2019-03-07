@@ -16,8 +16,22 @@ module.exports = class extends <%= generators[subGenerator].name %> {
         }
 
         this.configOptions = jhContext.configOptions || {};
+        <% if (subGenerator === 'entity-server') { %>
+        if (jhContext.databaseType === 'cassandra') {
+            this.pkType = 'UUID';
+        }
+        <% } %>
         // This sets up options for this sub generator and is being reused from JHipster
+        <% if(subGenerator === 'server') { %>
         jhContext.setupServerOptions(this, jhContext);
+        <% } else if(subGenerator === 'client') { %>
+        jhContext.setupClientOptions(this, jhContext);
+        <% } else if (subGenerator === 'entity') { %>
+        jhContext.setupEntityOptions(this, jhContext, this);
+        <% } else if (subGenerator === 'common') {%>
+        jhContext.setupServerOptions(this, jhContext);
+        jhContext.setupClientOptions(this, jhContext);
+        <% } %>
     }
 
     get initializing() {

@@ -186,6 +186,8 @@ module.exports = class extends Generator {
         this.template('gitignore', '.gitignore');
         this.template('_travis.yml', '.travis.yml');
         this.template('_package.json', 'package.json');
+        this.template('cli/app.js', 'cli/app.js');
+        this.template('cli/utils.js', 'cli/utils.js');
         if (this.license === 'apache') {
             this.template('_LICENSE_APACHE', 'LICENSE');
         } else if (this.license === 'gpl') {

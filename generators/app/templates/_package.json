@@ -14,8 +14,12 @@
     "url": "<%= authorUrl %>"
   },
   "files": [
-    "generators"
+    "generators",
+      "cli"
   ],
+  "bin": {
+    "jhipster-<%= moduleName %>": "./cli/app.js"
+  },
   "main": "generators/app/index.js",
   "repository": {
     "type": "git",

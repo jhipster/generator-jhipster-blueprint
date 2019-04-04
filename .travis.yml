@@ -20,6 +20,7 @@ env:
     - JHIPSTER_TRAVIS=$TRAVIS_BUILD_DIR/travis
     - JHIPSTER_SAMPLES=$JHIPSTER_TRAVIS/samples
     - JHIPSTER_SCRIPTS=$JHIPSTER_TRAVIS/scripts
+    - JHI_DISABLE_WEBPACK_LOGS=true
     - APP_FOLDER=$HOME/app
 before_install:
   # Update NPM
@@ -33,6 +34,11 @@ script:
   - npm test
 
   # ----- integration tests
+  # clone jhipster
+  - cd $HOME
+  - git clone https://github.com/jhipster/jhipster jhipster
+  - cd jhipster
+  - ./mvnw clean install -Dgpg.skip=true
   # clone generator-jhipster
   - cd $HOME
   - git clone https://github.com/jhipster/generator-jhipster generator-jhipster
@@ -62,14 +68,23 @@ script:
   - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
   - curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
 
-  - npm link generator-jhipster
   - npm link generator-jhipster-helloworld
   - jhipster --blueprint helloworld --force --no-insight
 
+  # link again generator-jhipster, because of npm install
+  - cd $HOME/generator-jhipster
+  - npm link
+  - cd $HOME/jhipster-helloworld
+  - npm link generator-jhipster
+  - cd "$APP_FOLDER"/
+  - npm link generator-jhipster
+  
+  # generate entities
   - jhipster entity BankAccount --force --skip-install
   - jhipster entity Label --force --skip-install
   - jhipster entity Operation --force --skip-install
   - jhipster spring-controller Hello --default
   - jhipster spring-service World --default
+  - npm run webpack:build
   - ./mvnw test
   - npm test

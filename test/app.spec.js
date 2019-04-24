@@ -30,6 +30,7 @@ const expectedFiles = {
     server: ['generators/server/index.js'],
     'spring-controller': ['generators/spring-controller/index.js'],
     'spring-service': ['generators/spring-service/index.js'],
+    foo: ['cli/commands.js', 'generators/foo/index.js'],
     license: ['LICENSE']
 };
 
@@ -42,7 +43,8 @@ const ALL_SUBGENS = [
     'languages',
     'server',
     'spring-controller',
-    'spring-service'
+    'spring-service',
+    'foo'
 ];
 
 describe('JHipster generator blueprint', () => {
@@ -250,7 +252,7 @@ describe('JHipster generator blueprint', () => {
         });
     });
 
-    describe('generate all blueprint templates only', () => {
+    describe('generate all blueprint templates only without custom subgenerator', () => {
         before(done => {
             helpers
                 .run(path.join(__dirname, '../generators/app'))
@@ -258,6 +260,40 @@ describe('JHipster generator blueprint', () => {
                     moduleName: 'hello-world',
                     moduleDescription: 'hello world',
                     blueprintSubs: ALL_SUBGENS,
+                    hookCallback: 'app',
+                    githubName: 'githubName',
+                    authorName: 'authorName',
+                    authorEmail: 'mail@mail',
+                    authorUrl: 'authorUrl',
+                    license: 'no'
+                })
+                .on('end', done);
+        });
+
+        it('generates default files', () => {
+            assert.file(expectedFiles.module);
+        });
+        ALL_SUBGENS.filter(subGen => subGen !== 'foo').forEach(subGen => {
+            it(`generates ${subGen} files`, () => {
+                assert.file(expectedFiles[subGen]);
+            });
+            if (!subGen.startsWith('entity-')) {
+                it(`generates ${subGen} test files`, () => {
+                    assert.file([`test/${subGen}.spec.js`]);
+                });
+            }
+        });
+    });
+
+    describe('generate custom sub generator and all blueprint templates only', () => {
+        before(done => {
+            helpers
+                .run(path.join(__dirname, '../generators/app'))
+                .withPrompts({
+                    moduleName: 'hello-world',
+                    moduleDescription: 'hello world',
+                    blueprintSubs: ALL_SUBGENS,
+                    blueprintCustomSub: true,
                     hookCallback: 'app',
                     githubName: 'githubName',
                     authorName: 'authorName',
@@ -280,6 +316,42 @@ describe('JHipster generator blueprint', () => {
                     assert.file([`test/${subGen}.spec.js`]);
                 });
             }
+        });
+    });
+
+    describe('generate custom subgenerator templates only', () => {
+        before(done => {
+            helpers
+                .run(path.join(__dirname, '../generators/app'))
+                .withPrompts({
+                    moduleName: 'hello-world',
+                    moduleDescription: 'hello world',
+                    blueprintSubs: [],
+                    blueprintCustomSub: true,
+                    hookCallback: 'app',
+                    githubName: 'githubName',
+                    authorName: 'authorName',
+                    authorEmail: 'mail@mail',
+                    authorUrl: 'authorUrl',
+                    license: 'no'
+                })
+                .on('end', done);
+        });
+
+        it('generates default files', () => {
+            assert.file(expectedFiles.module);
+        });
+        it('generates foo files', () => {
+            assert.file(expectedFiles.foo);
+        });
+        it("doesn't generate unecessary template folder", () => {
+            assert.noFile(expectedFiles.templates);
+        });
+        ALL_SUBGENS.filter(subGen => subGen !== 'foo').forEach(subGen => {
+            it(`doesn't generate ${subGen} files`, () => {
+                assert.noFile(expectedFiles[subGen]);
+                assert.noFile([`test/${subGen}.spec.js`]);
+            });
         });
     });
 });

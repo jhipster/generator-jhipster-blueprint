@@ -92,6 +92,12 @@ module.exports = class extends Generator {
                 ]
             },
             {
+                type: 'confirm',
+                name: 'blueprintCustomSub',
+                message: 'Do you want to add a custom subgenerator?',
+                default: false
+            },
+            {
                 type: 'input',
                 name: 'githubName',
                 validate: validateGitHubName,
@@ -163,6 +169,7 @@ module.exports = class extends Generator {
                 this.authorEmail = props.authorEmail;
                 this.authorUrl = props.authorUrl;
                 this.license = props.license;
+                this.blueprintCustomSub = props.blueprintCustomSub;
 
                 this.log(this.blueprintSubs);
                 done();
@@ -233,6 +240,10 @@ module.exports = class extends Generator {
         if (this.blueprintSubs.includes('spring-service')) {
             // copy files for the spring-service generator
             this.template('generators/spring-service/_index.js', 'generators/spring-service/index.js');
+        }
+        if (this.blueprintCustomSub === true) {
+            this.template('generators/foo/_index.js', 'generators/foo/index.js');
+            this.template('cli/_commands.js', 'cli/commands.js');
         }
 
         this.blueprintSubs.filter(subGen => !subGen.startsWith('entity-')).forEach(subGenerator => {

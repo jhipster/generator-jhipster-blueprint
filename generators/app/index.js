@@ -22,6 +22,18 @@ module.exports = class extends Generator {
                 if (args === 'default') {
                     this.default = true;
                 }
+                this.generators = {
+                    server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
+                    client: { name: 'ClientGenerator', path: 'generator-jhipster/generators/client' },
+                    common: { name: 'CommonGenerator', path: 'generator-jhipster/generators/common' },
+                    entity: { name: 'EntityGenerator', path: 'generator-jhipster/generators/entity' },
+                    'entity-client': { name: 'EntityClientGenerator', path: 'generator-jhipster/generators/entity-client' },
+                    'entity-server': { name: 'EntityServerGenerator', path: 'generator-jhipster/generators/entity-server' },
+                    'entity-i18n': { name: 'EntityI18nGenerator', path: 'generator-jhipster/generators/entity-i18n' },
+                    languages: { name: 'LanguagesGenerator', path: 'generator-jhipster/generators/languages' },
+                    'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
+                    'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' }
+                };
             },
 
             displayLogo() {
@@ -52,44 +64,7 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'blueprintSubs',
                 message: 'Which sub-generators do you want to override?',
-                choices: [
-                    {
-                        name: 'client',
-                        value: 'client'
-                    },
-                    {
-                        name: 'server',
-                        value: 'server'
-                    },
-                    {
-                        name: 'entity',
-                        value: 'entity'
-                    },
-                    {
-                        name: 'entity-client',
-                        value: 'entity-client'
-                    },
-                    {
-                        name: 'entity-server',
-                        value: 'entity-server'
-                    },
-                    {
-                        name: 'entity-i18n',
-                        value: 'entity-i18n'
-                    },
-                    {
-                        name: 'languages',
-                        value: 'languages'
-                    },
-                    {
-                        name: 'spring-controller',
-                        value: 'spring-controller'
-                    },
-                    {
-                        name: 'spring-service',
-                        value: 'spring-service'
-                    }
-                ]
+                choices: Object.keys(this.generators)
             },
             {
                 type: 'input',
@@ -135,17 +110,7 @@ module.exports = class extends Generator {
             // generate default blueprint
             this.moduleName = 'helloworld';
             this.moduleDescription = 'Default Blueprint';
-            this.blueprintSubs = [
-                'client',
-                'server',
-                'entity',
-                'entity-client',
-                'entity-server',
-                'entity-i18n',
-                'languages',
-                'spring-controller',
-                'spring-service'
-            ];
+            this.blueprintSubs = Object.keys(this.generators);
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';
@@ -195,53 +160,24 @@ module.exports = class extends Generator {
         }
         this.template('_README.md', 'README.md');
 
-        if (this.blueprintSubs.includes('client')) {
-            // copy files for the client generator
-            mkdirp('generators/client/templates');
-            this.template('generators/client/_index.js', 'generators/client/index.js');
-            this.template('generators/client/_files.js', 'generators/client/files.js');
-            this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
-            this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
-        }
-        if (this.blueprintSubs.includes('server')) {
-            // copy files for the server generator
-            this.template('generators/server/_index.js', 'generators/server/index.js');
-        }
-        if (this.blueprintSubs.includes('entity')) {
-            // copy files for the entity generator
-            this.template('generators/entity/_index.js', 'generators/entity/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-client')) {
-            // copy files for the entity-client generator
-            this.template('generators/entity-client/_index.js', 'generators/entity-client/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-server')) {
-            // copy files for the entity-server generator
-            this.template('generators/entity-server/_index.js', 'generators/entity-server/index.js');
-        }
-        if (this.blueprintSubs.includes('entity-i18n')) {
-            // copy files for the entity-i18n generator
-            this.template('generators/entity-i18n/_index.js', 'generators/entity-i18n/index.js');
-        }
-        if (this.blueprintSubs.includes('languages')) {
-            this.template('generators/languages/_index.js', 'generators/languages/index.js');
-        }
-        if (this.blueprintSubs.includes('spring-controller')) {
-            // copy files for the spring-controller generator
-            this.template('generators/spring-controller/_index.js', 'generators/spring-controller/index.js');
-        }
-        if (this.blueprintSubs.includes('spring-service')) {
-            // copy files for the spring-service generator
-            this.template('generators/spring-service/_index.js', 'generators/spring-service/index.js');
-        }
+        this.blueprintSubs.forEach(generator => {
+            this.subGenerator = generator;
 
-        this.blueprintSubs.filter(subGen => !subGen.startsWith('entity-')).forEach(subGenerator => {
-            this.subGenerator = subGenerator;
-            this.template('test/_subgen.spec.ejs', `test/${subGenerator}.spec.js`);
+            if (generator === 'client') {
+                mkdirp('generators/client/templates');
+                this.template('generators/client/_files.js', 'generators/client/files.js');
+                this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
+                this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
+            }
+            if (!generator.startsWith('entity-')) {
+                this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
+            }
+            if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(generator)) {
+                this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+            }
+
+            this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);
         });
-        if (this.blueprintSubs.find(subGen => ['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGen))) {
-            this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
-        }
     }
 
     end() {

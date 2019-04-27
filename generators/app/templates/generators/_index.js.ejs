@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const ClientGenerator = require('generator-jhipster/generators/client');
-const writeFiles = require('./files').writeFiles;
+const <%= generators[subGenerator].name %> = require('<%= generators[subGenerator].path %>');
+<% if(subGenerator === 'client') {%> const writeFiles = require('./files').writeFiles; <% } %>
 
-module.exports = class extends ClientGenerator {
+module.exports = class extends <%= generators[subGenerator].name %> {
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
 
@@ -16,13 +16,31 @@ module.exports = class extends ClientGenerator {
         }
 
         this.configOptions = jhContext.configOptions || {};
+        <% if (subGenerator === 'entity-server') { %>
+        if (jhContext.databaseType === 'cassandra') {
+            this.pkType = 'UUID';
+        }
+        <% } %>
+
+        <% if(subGenerator === 'server') { %>
+        // This sets up options for this sub generator and is being reused from JHipster
+        jhContext.setupServerOptions(this, jhContext);
+        <% } else if(subGenerator === 'client') { %>
         // This sets up options for this sub generator and is being reused from JHipster
         jhContext.setupClientOptions(this, jhContext);
+        <% } else if (subGenerator === 'entity') { %>
+        // This sets up options for this sub generator and is being reused from JHipster
+        jhContext.setupEntityOptions(this, jhContext, this);
+        <% } else if (subGenerator === 'common') {%>
+        // This sets up options for this sub generator and is being reused from JHipster
+        jhContext.setupServerOptions(this, jhContext);
+        jhContext.setupClientOptions(this, jhContext);
+        <% } %>
     }
 
     get initializing() {
         /**
-         * Any method beginning with _ can be reused from the superclass `ClientGenerator`
+         * Any method beginning with _ can be reused from the superclass `<%= generators[subGenerator].name %>`
          *
          * There are multiple ways to customize a phase from JHipster.
          *
@@ -62,6 +80,7 @@ module.exports = class extends ClientGenerator {
     }
 
     get prompting() {
+        <% if(subGenerator === 'client') {%>
         // The prompting phase is being overriden so that we can ask our own questions
         // return {
         //     askForClient: prompts.askForClient,
@@ -75,6 +94,8 @@ module.exports = class extends ClientGenerator {
         //     }
         // };
         // If the prompts need to be overriden then use the code commented out above instead
+        <% } %>
+        // Here we are not overriding this phase and hence its being handled by JHipster
         return super._prompting();
     }
 
@@ -89,6 +110,7 @@ module.exports = class extends ClientGenerator {
     }
 
     get writing() {
+        <% if (subGenerator === 'client') {%>
         // The writing phase is being overriden so that we can write our own templates as well.
         // If the templates doesnt need to be overrriden then just return `super._writing()` here
         const phaseFromJHipster = super._writing();
@@ -98,6 +120,10 @@ module.exports = class extends ClientGenerator {
             }
         };
         return Object.assign(phaseFromJHipster, customPhaseSteps);
+        <% } else { %>
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._writing();
+        <% } %>
     }
 
     get install() {

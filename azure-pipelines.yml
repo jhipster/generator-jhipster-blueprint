@@ -1,0 +1,109 @@
+#
+# Copyright 2013-2019 the original author or authors from the JHipster project.
+#
+# This file is part of the JHipster project, see https://www.jhipster.tech/
+# for more information.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+jobs:
+  - job: Test
+    pool:
+      vmImage: "Ubuntu 16.04"
+    variables:
+      PROFILE: dev
+      RUN_APP: 1
+      PROTRACTOR: 0
+      JHIPSTER_AZURE: $BUILD_SOURCESDIRECTORY/travis
+      JHIPSTER_SAMPLES: $BUILD_SOURCESDIRECTORY/travis/samples
+      JHI_DISABLE_WEBPACK_LOGS: true
+      APP_FOLDER: $HOME/app
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "10.15.3"
+        displayName: "Install Node.js"
+      - script: npm install -g npm
+        displayName: 'TOOLS: update NPM'
+      - script: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt update
+          sudo apt install google-chrome-stable
+        displayName: 'TOOLS: install google-chrome-stable'
+      - script: |
+          set -e
+          npm install -g yo
+          npm install
+          npm link
+        displayName: 'Install dependencies'
+      - script: npm test
+        displayName: 'Local tests'
+      - script: |
+          set -e
+          # clone jhipster
+          cd $HOME
+          git clone https://github.com/jhipster/jhipster jhipster
+          cd jhipster
+          ./mvnw clean install -ntp -Dgpg.skip=true
+
+          # clone generator-jhipster
+          cd $HOME
+          git clone https://github.com/jhipster/generator-jhipster generator-jhipster
+          cd generator-jhipster
+          git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+          npm install
+          npm link
+
+          # generate default blueprint
+          mkdir -p $HOME/jhipster-helloworld && cd $HOME/jhipster-helloworld
+          npm link generator-jhipster-blueprint
+          yo jhipster-blueprint default
+          npm install
+          npm link
+          npm link generator-jhipster
+          npm test
+
+          # force no insight
+          mkdir -p $HOME/.config/configstore/
+          cp $(JHIPSTER_AZURE)/configstore/*.json $HOME/.config/configstore/
+
+          # generate a JHipster project, using blueprint
+          mkdir -p $(APP_FOLDER)/.jhipster/ && cd $(APP_FOLDER)
+          cp $(JHIPSTER_SAMPLES)/ngx-blueprint/.yo-rc.json $(APP_FOLDER)
+          curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
+          curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
+          curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
+
+          npm link generator-jhipster-helloworld
+          jhipster --blueprint helloworld --force --no-insight
+
+          # link again generator-jhipster, because of npm install
+          cd $(HOME)/generator-jhipster
+          npm link
+          cd $HOME/jhipster-helloworld
+          npm link generator-jhipster
+          cd $(APP_FOLDER)
+          npm link generator-jhipster
+          
+          # generate entities
+          jhipster entity BankAccount --force --skip-install
+          jhipster entity Label --force --skip-install
+          jhipster entity Operation --force --skip-install
+          jhipster spring-controller Hello --default
+          jhipster spring-service World --default
+          npm run webpack:build
+          ./mvnw -ntp test
+          npm test
+        displayName: 'Integration tests'
+

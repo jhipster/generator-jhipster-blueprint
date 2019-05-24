@@ -1,5 +1,8 @@
 # generator-jhipster-blueprint
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM version][npm-image]][npm-url]
+[![Azure DevOps Build Status][azure-devops-image]][azure-devops-url-main]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][daviddm-image]][daviddm-url]
 > JHipster module, used to create a JHipster blueprint
 
 <div align="center">
@@ -82,6 +85,8 @@ Apache-2.0 © [Deepu KS](https://twitter.com/deepu105) and the respective JHipst
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-blueprint.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-blueprint
+[azure-devops-image]: https://dev.azure.com/jhipster/generator-jhipster-blueprint/_apis/build/status/jhipster.generator-jhipster-blueprint?branchName=master
+[azure-devops-url-main]: https://dev.azure.com/jhipster/generator-jhipster-module/_build
 [travis-image]: https://travis-ci.org/jhipster/generator-jhipster-blueprint.svg?branch=master
 [travis-url]: https://travis-ci.org/jhipster/generator-jhipster-blueprint
 [daviddm-image]: https://david-dm.org/jhipster/generator-jhipster-blueprint.svg?theme=shields.io

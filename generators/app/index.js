@@ -169,10 +169,8 @@ module.exports = class extends Generator {
                 this.template('generators/client/_prompts.js', 'generators/client/prompts.js');
                 this.template('generators/client/templates/_dummy.txt', 'generators/client/templates/_dummy.txt');
             }
-            if (!generator.startsWith('entity-')) {
-                this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
-            }
-            if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(generator)) {
+            this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
+            if (!['common', 'client', 'server'].includes(generator)) {
                 this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
             }
 

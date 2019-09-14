@@ -1,5 +1,5 @@
 const path = require('path');
-<%_ if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+<%_ if (!['common', 'client', 'server'].includes(subGenerator)) { _%>
 const fse = require('fs-extra');
 <%_ } _%>
 const assert = require('yeoman-assert');
@@ -9,8 +9,8 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
     describe('Sample test', () => {
         before((done) => {
             helpers
-                .run('generator-jhipster/generators/<%= subGenerator %>')
-<%_ if (['entity', 'languages', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+                .run('generator-jhipster/generators/<% if (subGenerator.startsWith('entity')) { %>entity<% } else { %><%= subGenerator %><% } %>')
+<%_ if (!['common', 'client', 'server'].includes(subGenerator)) { _%>
                 .inTmpDir((dir) => {
                     fse.copySync(path.join(__dirname, '../test/templates/ngx-blueprint'), dir);
                 })
@@ -20,16 +20,16 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
                 })
                 .withGenerators([
                     [
-                        require('../generators/<%= subGenerator %>/index.js'), // eslint-disable-line global-require
+                        require('../generators/<%= subGenerator %>'), // eslint-disable-line global-require
                         'jhipster-<%= moduleName %>:<%= subGenerator %>',
                         path.join(__dirname, '../generators/<%= subGenerator %>/index.js')
                     ]
                 ])
-<%_ if (['entity', 'spring-controller', 'spring-service'].includes(subGenerator)) { _%>
+<%_ if (subGenerator.startsWith('entity') || subGenerator.startsWith('spring')) { _%>
                 .withArguments(['foo'])
 <%_ } _%>
                 .withPrompts({
-<%_ if (subGenerator === 'entity') { _%>
+<%_ if (subGenerator.startsWith('entity')) { _%>
                     fieldAdd: false,
                     relationshipAdd: false,
                     dto: 'no',

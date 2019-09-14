@@ -5,8 +5,13 @@ const <%= generators[subGenerator].name %> = require('<%= generators[subGenerato
 
 module.exports = class extends <%= generators[subGenerator].name %> {
     constructor(args, opts) {
-        super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
+        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 
+        <% if (subGenerator.startsWith('entity-')) { %>
+        if (!this.jhipsterContext) {
+            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
+        }
+        <% } else { %>
         const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
 
         if (!jhContext) {
@@ -16,10 +21,6 @@ module.exports = class extends <%= generators[subGenerator].name %> {
         }
 
         this.configOptions = jhContext.configOptions || {};
-        <% if (subGenerator === 'entity-server') { %>
-        if (jhContext.databaseType === 'cassandra') {
-            this.pkType = 'UUID';
-        }
         <% } %>
 
         <% if(subGenerator === 'server') { %>

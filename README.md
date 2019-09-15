@@ -3,7 +3,7 @@
 [![Azure DevOps Build Status][azure-devops-image]][azure-devops-url-main]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster module, used to create a JHipster blueprint
+> Yeoman generator to create a JHipster blueprint
 
 <div align="center">
     <a href="https://www.jhipster.tech">
@@ -13,7 +13,7 @@
 
 # Introduction
 
-This is **not really** a [JHipster](https://www.jhipster.tech) module, that is meant to **not** be used in a JHipster application. This module is used to generate a template for coding a new JHipster blueprint. A JHipster module to create a JHipster blueprint.
+This [Yeoman](https://yeoman.io/) generator will help you to kickstart a new [JHipster](https://www.jhipster.tech) blueprint, if you intent to override or extend the JHipster generator. 
 
 # Prerequisites
 

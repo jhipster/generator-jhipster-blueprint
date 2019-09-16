@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const filter = require('gulp-filter');
+const NpmApi = require('npm-api');
 const packagejs = require('../../package.json');
 const { prettierTransform, prettierOptions } = require('./generator-transforms');
 const { validateGitHubName, validateModuleName } = require('./input-validation');
@@ -45,6 +46,23 @@ module.exports = class extends Generator {
         };
     }
 
+    configuring() {
+        const done = this.async();
+        new NpmApi()
+            .repo('generator-jhipster')
+            .package()
+            .then(
+                pkg => {
+                    this.jhipsterVersion = pkg.version;
+                    done();
+                },
+                err => {
+                    this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
+                    done();
+                }
+            );
+    }
+
     prompting() {
         const done = this.async();
         const prompts = [
@@ -59,6 +77,12 @@ module.exports = class extends Generator {
                 type: 'input',
                 name: 'moduleDescription',
                 message: 'Give a description of your module'
+            },
+            {
+                type: 'input',
+                name: 'jhipsterVersion',
+                when: () => typeof this.jhipsterVersion === 'undefined',
+                message: 'Latest JHipster version could not be retrieved. Which version are you targeting?'
             },
             {
                 type: 'checkbox',
@@ -122,6 +146,7 @@ module.exports = class extends Generator {
                 this.props = props;
                 this.moduleName = props.moduleName;
                 this.moduleDescription = props.moduleDescription;
+                this.jhipsterVersion = props.jhipsterVersion;
                 this.blueprintSubs = props.blueprintSubs;
                 this.githubName = props.githubName;
                 this.authorName = props.authorName;

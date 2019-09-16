@@ -24,6 +24,7 @@
     "chalk": "2.4.1",
     "gulp-filter": "5.1.0",
     "mkdirp": "0.5.1",
+    "npm-api": "1.0.0",
     "prettier": "1.14.3",
     "through2": "2.0.3",
     "yeoman-generator": "2.0.5"

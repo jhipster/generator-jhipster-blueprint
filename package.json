@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-blueprint",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Yeoman generator to create a JHipster blueprint",
   "keywords": [
     "yeoman-generator"

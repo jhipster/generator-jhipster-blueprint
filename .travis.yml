@@ -2,7 +2,7 @@ os:
   - linux
 language: node_js
 node_js:
-  - "12.13.1"
+  - "12.14.0"
 addons:
   apt:
     sources:
@@ -78,7 +78,7 @@ script:
   - npm link generator-jhipster
   - cd "$APP_FOLDER"/
   - npm link generator-jhipster
-  
+
   # generate entities
   - jhipster entity BankAccount --force --skip-install
   - jhipster entity Label --force --skip-install

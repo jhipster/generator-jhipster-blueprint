@@ -21,8 +21,8 @@ jobs:
     pool:
       vmImage: "Ubuntu 18.04"
     variables:
-      JHIPSTER_AZURE: $BUILD_SOURCESDIRECTORY/travis
-      JHIPSTER_SAMPLES: $BUILD_SOURCESDIRECTORY/travis/samples
+      JHIPSTER_AZURE: $BUILD_SOURCESDIRECTORY/ci
+      JHIPSTER_SAMPLES: $BUILD_SOURCESDIRECTORY/ci/samples
       APP_FOLDER: $HOME/app
     steps:
       - task: NodeTool@0

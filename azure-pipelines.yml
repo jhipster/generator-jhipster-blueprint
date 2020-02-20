@@ -19,14 +19,10 @@
 jobs:
   - job: Test
     pool:
-      vmImage: "Ubuntu 16.04"
+      vmImage: "Ubuntu 18.04"
     variables:
-      PROFILE: dev
-      RUN_APP: 1
-      PROTRACTOR: 0
       JHIPSTER_AZURE: $BUILD_SOURCESDIRECTORY/travis
       JHIPSTER_SAMPLES: $BUILD_SOURCESDIRECTORY/travis/samples
-      JHI_DISABLE_WEBPACK_LOGS: true
       APP_FOLDER: $HOME/app
     steps:
       - task: NodeTool@0
@@ -43,36 +39,23 @@ jobs:
         displayName: 'TOOLS: install google-chrome-stable'
       - script: |
           set -e
-          npm install -g yo
-          npm install
-          npm link
+          npm install -g yo generator-jhipster
+          npm ci
+          # install generator-jhipster-blueprint globally
+          npm install -g
         displayName: 'Install dependencies'
       - script: npm test
         displayName: 'Local tests'
       - script: |
           set -e
-          # clone jhipster
-          cd $HOME
-          git clone https://github.com/jhipster/jhipster jhipster
-          cd jhipster
-          ./mvnw clean install -ntp -Dgpg.skip=true
-
-          # clone generator-jhipster
-          cd $HOME
-          git clone https://github.com/jhipster/generator-jhipster generator-jhipster
-          cd generator-jhipster
-          git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-          npm install
-          npm link
 
           # generate default blueprint
-          mkdir -p $HOME/jhipster-helloworld && cd $HOME/jhipster-helloworld
-          npm link generator-jhipster-blueprint
+          mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
           yo jhipster-blueprint default
           npm install
-          npm link
-          npm link generator-jhipster
           npm test
+          # install generator-jhipster-helloworld globally
+          npm install -g
 
           # force no insight
           mkdir -p $HOME/.config/configstore/
@@ -85,25 +68,15 @@ jobs:
           curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
           curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
 
-          npm link generator-jhipster-helloworld
-          jhipster --blueprint helloworld --force --no-insight
+          jhipster --blueprint helloworld --force --no-insight --with-entities
+          [ -f dummy.txt ]
 
-          # link again generator-jhipster, because of npm install
-          cd $(HOME)/generator-jhipster
-          npm link
-          cd $HOME/jhipster-helloworld
-          npm link generator-jhipster
-          cd $(APP_FOLDER)
-          npm link generator-jhipster
-
-          # generate entities
-          jhipster entity BankAccount --force --skip-install
-          jhipster entity Label --force --skip-install
-          jhipster entity Operation --force --skip-install
+          # generate servies
           jhipster spring-controller Hello --default
           jhipster spring-service World --default
-          npm run webpack:build
-          ./mvnw -ntp test
+
+          npm install $HOME/generator-jhipster-helloworld
+          npm install
           npm test
         displayName: 'Integration tests'
 

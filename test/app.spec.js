@@ -15,6 +15,7 @@ const expectedFiles = {
         'package.json',
         'README.md'
     ],
+    app: ['generators/app/index.js'],
     client: [
         'generators/client/index.js',
         'generators/client/files.js',
@@ -35,6 +36,7 @@ const expectedFiles = {
 };
 
 const ALL_SUBGENS = [
+    'app',
     'client',
     'entity',
     'common',

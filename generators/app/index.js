@@ -24,6 +24,7 @@ module.exports = class extends Generator {
                     this.default = true;
                 }
                 this.generators = {
+                    app: { name: 'AppGenerator', path: 'generator-jhipster/generators/app' },
                     server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
                     client: { name: 'ClientGenerator', path: 'generator-jhipster/generators/client' },
                     common: { name: 'CommonGenerator', path: 'generator-jhipster/generators/common' },

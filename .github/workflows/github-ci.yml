@@ -5,73 +5,73 @@ jobs:
         name: unit tests
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-node@v1
-                with:
-                    node-version: 12.14.0
-            -   name: Install node.js packages
-                run: npm install
-            -   name: Run generator tests
-                run: npm test
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12.16.1
+            - name: Install node.js packages
+              run: npm install
+            - name: Run generator tests
+              run: npm test
     integration-tests:
         name: integration tests
         runs-on: ubuntu-latest
-        timeout-minutes: 10
+        timeout-minutes: 20
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-node@v1
-                with:
-                    node-version: 12.14.0
-            -   name: 'TOOLS: update NPM'
-                run: npm install -g npm
-            -   name: 'TOOLS: install google-chrome-stable'
-                run: |
-                    sudo apt update
-                    sudo apt install google-chrome-stable
-            -   name: 'Install dependencies'
-                run: |
-                    set -e
-                    npm install -g yo generator-jhipster
-                    npm ci
-                    # install generator-jhipster-blueprint globally
-                    npm install -g
-            -   name: 'Generate blueprint'
-                run: |
-                    set -e
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12.16.1
+            - name: 'TOOLS: update NPM'
+              run: npm install -g npm
+            - name: 'TOOLS: install google-chrome-stable'
+              run: |
+                  sudo apt update
+                  sudo apt install google-chrome-stable
+            - name: 'Install dependencies'
+              run: |
+                  set -e
+                  npm install -g yo generator-jhipster
+                  npm ci
+                  # install generator-jhipster-blueprint globally
+                  npm install -g
+            - name: 'Generate blueprint'
+              run: |
+                  set -e
 
-                    # generate default blueprint
-                    mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
-                    yo jhipster-blueprint default
-                    npm install
-                    npm test
-                    # install generator-jhipster-helloworld globally
-                    npm install -g
-            -   name: 'Generate a JHipster project, using blueprint'
-                env:
-                    JHIPSTER_CONFIG_STORE: ${{ github.workspace }}/test-integration/configstore
-                    JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/samples
-                    APP_FOLDER: ${{ github.workspace }}/../app
-                run: |
-                    set -e
+                  # generate default blueprint
+                  mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
+                  yo jhipster-blueprint default
+                  npm install
+                  npm test
+                  # install generator-jhipster-helloworld globally
+                  npm install -g
+            - name: 'Generate a JHipster project, using blueprint'
+              env:
+                  JHIPSTER_CONFIG_STORE: ${{ github.workspace }}/test-integration/configstore
+                  JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/samples
+                  APP_FOLDER: ${{ github.workspace }}/../app
+              run: |
+                  set -e
 
-                    # force no insight
-                    mkdir -p $HOME/.config/configstore/
-                    cp $JHIPSTER_CONFIG_STORE/*.json $HOME/.config/configstore/
+                  # force no insight
+                  mkdir -p $HOME/.config/configstore/
+                  cp $JHIPSTER_CONFIG_STORE/*.json $HOME/.config/configstore/
 
-                    # generate a JHipster project, using blueprint
-                    mkdir -p $APP_FOLDER/.jhipster/ && cd $APP_FOLDER
-                    cp $JHIPSTER_SAMPLES/ngx-blueprint/.yo-rc.json $APP_FOLDER
-                    curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
-                    curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
-                    curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
+                  # generate a JHipster project, using blueprint
+                  mkdir -p $APP_FOLDER/.jhipster/ && cd $APP_FOLDER
+                  cp $JHIPSTER_SAMPLES/ngx-blueprint/.yo-rc.json $APP_FOLDER
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
 
-                    jhipster --blueprints helloworld --force --no-insight --with-entities
-                    [ -f dummy.txt ]
+                  jhipster --blueprints helloworld --force --no-insight --with-entities
+                  [ -f dummy.txt ]
 
-                    # generate servies
-                    jhipster spring-controller Hello --default
-                    jhipster spring-service World --default
+                  # generate services
+                  jhipster spring-controller Hello --default
+                  jhipster spring-service World --default
 
-                    npm install $HOME/generator-jhipster-helloworld
-                    npm install
-                    npm test
+                  npm install $HOME/generator-jhipster-helloworld
+                  npm install
+                  npm test

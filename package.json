@@ -21,24 +21,24 @@
     "url": "git+https://github.com/jhipster/generator-jhipster-blueprint.git"
   },
   "dependencies": {
-    "chalk": "2.4.1",
+    "chalk": "2.4.2",
     "gulp-filter": "5.1.0",
     "mkdirp": "0.5.1",
     "npm-api": "1.0.0",
-    "prettier": "1.14.3",
-    "through2": "2.0.3",
-    "yeoman-generator": "2.0.5"
+    "prettier": "1.19.1",
+    "through2": "3.0.1",
+    "yeoman-generator": "4.6.0"
   },
   "devDependencies": {
-    "eslint": "5.0.0",
-    "eslint-config-airbnb-base": "13.0.0",
-    "eslint-config-prettier": "3.1.0",
-    "eslint-plugin-import": "2.12.0",
-    "eslint-plugin-prettier": "3.0.0",
-    "fs-extra": "6.0.1",
-    "mocha": "5.2.0",
+    "eslint": "6.2.2",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "6.1.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-prettier": "3.1.0",
+    "fs-extra": "7.0.1",
+    "mocha": "6.1.4",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "1.7.2"
+    "yeoman-test": "2.2.0"
   },
   "scripts": {
     "pretest": "eslint .",

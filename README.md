@@ -1,8 +1,10 @@
 # generator-jhipster-blueprint
+
 [![NPM version][npm-image]][npm-url]
 [![Azure DevOps Build Status][azure-devops-image]][azure-devops-url-main]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][daviddm-image]][daviddm-url]
+
 > Yeoman generator to create a JHipster blueprint
 
 <div align="center">
@@ -13,7 +15,7 @@
 
 # Introduction
 
-This [Yeoman](https://yeoman.io/) generator will help you to kickstart a new [JHipster](https://www.jhipster.tech) blueprint, if you intent to override or extend the JHipster generator. 
+This [Yeoman](https://yeoman.io/) generator will help you to kickstart a new [JHipster](https://www.jhipster.tech) blueprint, if you intent to override or extend the JHipster generator.
 
 # Prerequisites
 
@@ -53,31 +55,31 @@ yarn global upgrade generator-jhipster-blueprint
 
 To run the module, follow these steps :
 
-- create a new directory
+-   create a new directory
 
 ```bash
 mkdir generator-jhipster-<name of your module>
 ```
 
-- go into this directory
+-   go into this directory
 
 ```bash
 cd generator-jhipster-<name of your module>
 ```
 
-- init the git repository
+-   init the git repository
 
 ```bash
 git init
 ```
 
-- launch the jhipster-blueprint
+-   launch the jhipster-blueprint
 
 ```bash
 yo jhipster-blueprint
 ```
 
-- answer all questions
+-   answer all questions
 
 # License
 

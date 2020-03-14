@@ -172,7 +172,7 @@ module.exports = class extends Generator {
         this.template('eslintignore', '.eslintignore');
         this.template('eslintrc.json', '.eslintrc.json');
         this.template('prettierrc.json', '.prettierrc');
-        this.template('prettirignore', '.prettirignore');
+        this.template('prettierignore', '.prettierignore');
         this.template('gitattributes', '.gitattributes');
         this.template('gitignore', '.gitignore');
         this.template('_travis.yml', '.travis.yml');

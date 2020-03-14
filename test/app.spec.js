@@ -8,7 +8,7 @@ const expectedFiles = {
         '.eslintignore',
         '.eslintrc.json',
         '.prettierrc',
-        '.prettirignore',
+        '.prettierignore',
         '.gitattributes',
         '.gitignore',
         '.travis.yml',

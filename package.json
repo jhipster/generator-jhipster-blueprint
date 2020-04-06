@@ -23,7 +23,7 @@
     "dependencies": {
         "chalk": "3.0.0",
         "gulp-filter": "6.0.0",
-        "mkdirp": "1.0.3",
+        "mkdirp": "1.0.4",
         "npm-api": "1.0.0",
         "prettier": "1.19.1",
         "through2": "3.0.1",

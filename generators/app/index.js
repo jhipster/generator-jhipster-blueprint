@@ -23,6 +23,10 @@ module.exports = class extends Generator {
                 if (args === 'default') {
                     this.default = true;
                 }
+                if (args === 'peer') {
+                    this.default = true;
+                    this.peerBlueprint = true;
+                }
                 this.generators = {
                     app: { name: 'AppGenerator', path: 'generator-jhipster/generators/app' },
                     server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
@@ -65,8 +69,13 @@ module.exports = class extends Generator {
     }
 
     prompting() {
-        const done = this.async();
         const prompts = [
+            {
+                type: 'confirm',
+                name: 'peerBlueprint',
+                message: 'Do you want to create a peer blueprint (experimental)?',
+                default: false
+            },
             {
                 type: 'input',
                 name: 'moduleName',
@@ -141,24 +150,24 @@ module.exports = class extends Generator {
             this.authorEmail = 'jhipster@localhost';
             this.authorUrl = 'https://twitter.com/java_hipster';
             this.license = 'apache';
-            done();
-        } else {
-            this.prompt(prompts).then(props => {
-                this.props = props;
-                this.moduleName = props.moduleName;
-                this.moduleDescription = props.moduleDescription;
-                this.jhipsterVersion = props.jhipsterVersion;
-                this.blueprintSubs = props.blueprintSubs;
-                this.githubName = props.githubName;
-                this.authorName = props.authorName;
-                this.authorEmail = props.authorEmail;
-                this.authorUrl = props.authorUrl;
-                this.license = props.license;
-
-                this.log(this.blueprintSubs);
-                done();
-            });
+            this.peerBlueprint = !!this.peerBlueprint;
+            return undefined;
         }
+        return this.prompt(prompts).then(props => {
+            this.props = props;
+            this.peerBlueprint = props.peerBlueprint;
+            this.moduleName = props.moduleName;
+            this.moduleDescription = props.moduleDescription;
+            this.jhipsterVersion = props.jhipsterVersion;
+            this.blueprintSubs = props.blueprintSubs;
+            this.githubName = props.githubName;
+            this.authorName = props.authorName;
+            this.authorEmail = props.authorEmail;
+            this.authorUrl = props.authorUrl;
+            this.license = props.license;
+
+            this.log(this.blueprintSubs);
+        });
     }
 
     writing() {
@@ -200,7 +209,11 @@ module.exports = class extends Generator {
                 this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
             }
 
-            this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);
+            if (this.peerBlueprint) {
+                this.template('generators/_index_peer.js.ejs', `generators/${generator}/index.js`);
+            } else {
+                this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);
+            }
         });
     }
 

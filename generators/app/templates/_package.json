@@ -22,9 +22,15 @@
     "url": "git+https://github.com/<%= githubName %>/generator-jhipster-<%= moduleName %>.git"
   },
   "dependencies": {
-    "chalk": "2.4.1",
+    "chalk": "2.4.1"<%_ if (!peerBlueprint) { _%>,
     "generator-jhipster": "<%= jhipsterVersion %>"
+    <%_ } %>
   },
+  <%_ if (peerBlueprint) { _%>
+  "peerDependencies": {
+    "generator-jhipster": "6.8.0"
+  },
+  <%_ } _%>
   "devDependencies": {
     "chai": "4.1.2",
     "ejs-lint": "0.3.0",
@@ -34,6 +40,9 @@
     "eslint-plugin-import": "2.12.0",
     "eslint-plugin-prettier": "3.0.0",
     "fs-extra": "6.0.1",
+  <%_ if (peerBlueprint) { _%>
+    "generator-jhipster": "jhipster/generator-jhipster#master",
+  <%_ } _%>
     "jsdoc": "3.5.5",
     "mocha": "5.2.0",
     "prettier": "1.14.3",

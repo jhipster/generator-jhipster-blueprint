@@ -28,7 +28,7 @@
   },
   <%_ if (peerBlueprint) { _%>
   "peerDependencies": {
-    "generator-jhipster": "<%= jhipsterVersion %>"
+    "generator-jhipster": "6.8.0"
   },
   <%_ } _%>
   "devDependencies": {
@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "3.0.0",
     "fs-extra": "6.0.1",
   <%_ if (peerBlueprint) { _%>
-    "generator-jhipster": "<%= jhipsterVersion %>",
+    "generator-jhipster": "jhipster/generator-jhipster#master",
   <%_ } _%>
     "jsdoc": "3.5.5",
     "mocha": "5.2.0",

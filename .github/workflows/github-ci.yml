@@ -34,7 +34,7 @@ jobs:
             - name: 'Install dependencies'
               run: |
                   set -e
-                  npm install -g yo generator-jhipster rimraf
+                  npm install -g yo jhipster/generator-jhipster#master rimraf
                   npm ci
                   # install generator-jhipster-blueprint globally
                   npm install -g

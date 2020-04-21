@@ -17,6 +17,9 @@ jobs:
         name: integration tests
         runs-on: ubuntu-latest
         timeout-minutes: 20
+        strategy:
+            matrix:
+                blueprint-type: [default, peer]
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -41,7 +44,7 @@ jobs:
 
                   # generate default blueprint
                   mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
-                  yo jhipster-blueprint default
+                  yo jhipster-blueprint ${{ matrix.blueprint-type }}
                   npm install
                   npm test
                   # install generator-jhipster-helloworld globally

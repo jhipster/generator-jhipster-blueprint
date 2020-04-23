@@ -43,29 +43,25 @@ module.exports = class extends Generator {
                 this.log(
                     chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
                 );
+            },
+
+            loadLastestJHipsterVersion() {
+                return new NpmApi()
+                    .repo('generator-jhipster')
+                    .package()
+                    .then(
+                        pkg => {
+                            this.jhipsterVersion = pkg.version;
+                        },
+                        err => {
+                            this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
+                        }
+                    );
             }
         };
     }
 
-    configuring() {
-        const done = this.async();
-        new NpmApi()
-            .repo('generator-jhipster')
-            .package()
-            .then(
-                pkg => {
-                    this.jhipsterVersion = pkg.version;
-                    done();
-                },
-                err => {
-                    this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
-                    done();
-                }
-            );
-    }
-
     prompting() {
-        const done = this.async();
         const prompts = [
             {
                 type: 'input',
@@ -141,24 +137,22 @@ module.exports = class extends Generator {
             this.authorEmail = 'jhipster@localhost';
             this.authorUrl = 'https://twitter.com/java_hipster';
             this.license = 'apache';
-            done();
-        } else {
-            this.prompt(prompts).then(props => {
-                this.props = props;
-                this.moduleName = props.moduleName;
-                this.moduleDescription = props.moduleDescription;
-                this.jhipsterVersion = props.jhipsterVersion;
-                this.blueprintSubs = props.blueprintSubs;
-                this.githubName = props.githubName;
-                this.authorName = props.authorName;
-                this.authorEmail = props.authorEmail;
-                this.authorUrl = props.authorUrl;
-                this.license = props.license;
-
-                this.log(this.blueprintSubs);
-                done();
-            });
+            return undefined;
         }
+        return this.prompt(prompts).then(props => {
+            this.props = props;
+            this.moduleName = props.moduleName;
+            this.moduleDescription = props.moduleDescription;
+            this.jhipsterVersion = props.jhipsterVersion;
+            this.blueprintSubs = props.blueprintSubs;
+            this.githubName = props.githubName;
+            this.authorName = props.authorName;
+            this.authorEmail = props.authorEmail;
+            this.authorUrl = props.authorUrl;
+            this.license = props.license;
+
+            this.log(this.blueprintSubs);
+        });
     }
 
     writing() {

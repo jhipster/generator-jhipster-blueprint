@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const filter = require('gulp-filter');
 const NpmApi = require('npm-api');
+const path = require('path');
 const packagejs = require('../../package.json');
 const { prettierTransform, prettierOptions } = require('./generator-transforms');
 const { validateGitHubName, validateModuleName } = require('./input-validation');
@@ -79,12 +80,13 @@ module.exports = class extends Generator {
                 name: 'moduleName',
                 validate: validateModuleName,
                 message: 'What is the base name of your module?',
-                default: 'helloworld'
+                default: path.basename(this.destinationRoot())
             },
             {
                 type: 'input',
                 name: 'moduleDescription',
-                message: 'Give a description of your module'
+                message: 'Give a description of your module',
+                default: this.determineAppname()
             },
             {
                 type: 'input',

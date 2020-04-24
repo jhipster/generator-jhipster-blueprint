@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const filter = require('gulp-filter');
 const NpmApi = require('npm-api');
+const path = require('path');
 const packagejs = require('../../package.json');
 const { prettierTransform, prettierOptions } = require('./generator-transforms');
 const { validateGitHubName, validateModuleName } = require('./input-validation');
@@ -20,9 +21,6 @@ module.exports = class extends Generator {
     get initializing() {
         return {
             init(args) {
-                if (args === 'default') {
-                    this.default = true;
-                }
                 this.generators = {
                     app: { name: 'AppGenerator', path: 'generator-jhipster/generators/app' },
                     server: { name: 'ServerGenerator', path: 'generator-jhipster/generators/server' },
@@ -36,6 +34,20 @@ module.exports = class extends Generator {
                     'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
                     'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' }
                 };
+
+                if (args === 'default') {
+                    // generate default blueprint
+                    this.config.defaults({
+                        moduleName: 'helloworld',
+                        moduleDescription: 'Default Blueprint',
+                        blueprintSubs: Object.keys(this.generators),
+                        githubName: 'jhipster-bot',
+                        authorName: 'JHipster Bot',
+                        authorEmail: 'jhipster@localhost',
+                        authorUrl: 'https://twitter.com/java_hipster',
+                        license: 'apache'
+                    });
+                }
             },
 
             displayLogo() {
@@ -43,47 +55,43 @@ module.exports = class extends Generator {
                 this.log(
                     chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
                 );
+            },
+
+            loadLastestJHipsterVersion() {
+                return new NpmApi()
+                    .repo('generator-jhipster')
+                    .package()
+                    .then(
+                        pkg => {
+                            this.config.set('jhipsterVersion', pkg.version);
+                        },
+                        err => {
+                            this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
+                        }
+                    );
             }
         };
     }
 
-    configuring() {
-        const done = this.async();
-        new NpmApi()
-            .repo('generator-jhipster')
-            .package()
-            .then(
-                pkg => {
-                    this.jhipsterVersion = pkg.version;
-                    done();
-                },
-                err => {
-                    this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
-                    done();
-                }
-            );
-    }
-
     prompting() {
-        const done = this.async();
         const prompts = [
             {
                 type: 'input',
                 name: 'moduleName',
                 validate: validateModuleName,
                 message: 'What is the base name of your module?',
-                default: 'helloworld'
+                default: path.basename(this.destinationRoot())
             },
             {
                 type: 'input',
                 name: 'moduleDescription',
-                message: 'Give a description of your module'
+                message: 'Give a description of your module',
+                default: this.determineAppname()
             },
             {
                 type: 'input',
                 name: 'jhipsterVersion',
-                when: () => typeof this.jhipsterVersion === 'undefined',
-                message: 'Latest JHipster version could not be retrieved. Which version are you targeting?'
+                message: 'Which version are you targeting?'
             },
             {
                 type: 'checkbox',
@@ -131,34 +139,11 @@ module.exports = class extends Generator {
             }
         ];
 
-        if (this.default) {
-            // generate default blueprint
-            this.moduleName = 'helloworld';
-            this.moduleDescription = 'Default Blueprint';
-            this.blueprintSubs = Object.keys(this.generators);
-            this.githubName = 'jhipster-bot';
-            this.authorName = 'JHipster Bot';
-            this.authorEmail = 'jhipster@localhost';
-            this.authorUrl = 'https://twitter.com/java_hipster';
-            this.license = 'apache';
-            done();
-        } else {
-            this.prompt(prompts).then(props => {
-                this.props = props;
-                this.moduleName = props.moduleName;
-                this.moduleDescription = props.moduleDescription;
-                this.jhipsterVersion = props.jhipsterVersion;
-                this.blueprintSubs = props.blueprintSubs;
-                this.githubName = props.githubName;
-                this.authorName = props.authorName;
-                this.authorEmail = props.authorEmail;
-                this.authorUrl = props.authorUrl;
-                this.license = props.license;
+        return this.prompt(prompts, this.config);
+    }
 
-                this.log(this.blueprintSubs);
-                done();
-            });
-        }
+    configuring() {
+        Object.assign(this, this.config.getAll());
     }
 
     writing() {

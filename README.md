@@ -21,6 +21,34 @@ This [Yeoman](https://yeoman.io/) generator will help you to kickstart a new [JH
 
 Reading this [JHipster blueprint](https://www.jhipster.tech/modules/creating-a-blueprint/)
 
+This generator requires yo and requires yeoman-environment >= 2.9.0. 
+If you are having problems running this generator you should try reinstalling yo.
+
+## With NPM
+To install yo:
+```bash
+npm install -g yo
+```
+
+To reinstall yo:
+```bash
+npm uninstall -g yo
+npm install -g yo
+```
+
+## With Yarn
+
+To install yo:
+```bash
+yarn global add yo
+```
+
+To reinstall yo:
+```bash
+yarn global remove yo
+yarn global add yo
+```
+
 # Installation
 
 ## With NPM
@@ -80,6 +108,16 @@ yo jhipster-blueprint
 ```
 
 -   answer all questions
+
+To regenarate:
+```bash
+yo jhipster-blueprint
+```
+
+To change any answer:
+```bash
+yo jhipster-blueprint --ask-answered
+```
 
 # License
 

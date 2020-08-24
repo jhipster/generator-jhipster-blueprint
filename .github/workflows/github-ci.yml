@@ -11,6 +11,8 @@ jobs:
                   node-version: 12.18.3
             - name: Install node.js packages
               run: npm install
+            - name: Check prettier formatting
+              run: npm run prettier:check
             - name: Run generator tests
               run: npm test
     integration-tests:
@@ -39,7 +41,7 @@ jobs:
               run: |
                   set -e
 
-                  # generate default blueprint
+                  # generate default blueprint
                   mkdir -p $HOME/generator-jhipster-helloworld && cd $HOME/generator-jhipster-helloworld
                   yo jhipster-blueprint default
                   npm install

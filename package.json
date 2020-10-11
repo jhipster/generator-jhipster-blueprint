@@ -27,7 +27,7 @@
         "npm-api": "1.0.0",
         "prettier": "1.19.1",
         "through2": "4.0.2",
-        "yeoman-generator": "4.11.0"
+        "yeoman-generator": "4.12.0"
     },
     "devDependencies": {
         "eslint": "7.7.0",

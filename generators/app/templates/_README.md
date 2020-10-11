@@ -64,7 +64,7 @@ cd <%= moduleName %>
 npm link
 ```
 
-2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the master branch or your own custom fork)
+2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the main branch or your own custom fork)
 
 You could also use Yarn for this if you prefer
 
@@ -101,7 +101,7 @@ MIT © [<%= authorName %>](<%= authorUrl %>)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-<%= moduleName %>.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-<%= moduleName %>
-[travis-image]: https://travis-ci.org/<%= githubName %>/generator-jhipster-<%= moduleName %>.svg?branch=master
+[travis-image]: https://travis-ci.org/<%= githubName %>/generator-jhipster-<%= moduleName %>.svg?branch=main
 [travis-url]: https://travis-ci.org/<%= githubName %>/generator-jhipster-<%= moduleName %>
 [daviddm-image]: https://david-dm.org/<%= githubName %>/generator-jhipster-<%= moduleName %>.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/<%= githubName %>/generator-jhipster-<%= moduleName %>

@@ -63,9 +63,9 @@ jobs:
                   # generate a JHipster project, using blueprint
                   mkdir -p $APP_FOLDER/.jhipster/ && cd $APP_FOLDER
                   cp $JHIPSTER_SAMPLES/ngx-blueprint/.yo-rc.json $APP_FOLDER
-                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
-                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
-                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/master/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/main/test-integration/samples/.jhipster/BankAccount.json -o .jhipster/BankAccount.json
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/main/test-integration/samples/.jhipster/Label.json -o .jhipster/Label.json
+                  curl https://raw.githubusercontent.com/jhipster/generator-jhipster/main/test-integration/samples/.jhipster/Operation.json -o .jhipster/Operation.json
 
                   jhipster --blueprints helloworld --force --no-insight --with-entities
                   [ -f dummy.txt ]

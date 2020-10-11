@@ -9,7 +9,7 @@
 
 <div align="center">
     <a href="https://www.jhipster.tech">
-        <img src="https://github.com/jhipster/jhipster-artwork/blob/master/logos/JHipster%20RGB-small100x25px.png?raw=true">
+        <img src="https://github.com/jhipster/jhipster-artwork/blob/main/logos/JHipster%20RGB-small100x25px.png?raw=true">
     </a>
 </div>
 
@@ -87,9 +87,9 @@ Apache-2.0 © [Deepu KS](https://twitter.com/deepu105) and the respective JHipst
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-blueprint.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-blueprint
-[azure-devops-image]: https://dev.azure.com/jhipster/generator-jhipster-blueprint/_apis/build/status/jhipster.generator-jhipster-blueprint?branchName=master
+[azure-devops-image]: https://dev.azure.com/jhipster/generator-jhipster-blueprint/_apis/build/status/jhipster.generator-jhipster-blueprint?branchName=main
 [azure-devops-url-main]: https://dev.azure.com/jhipster/generator-jhipster-module/_build
-[travis-image]: https://travis-ci.org/jhipster/generator-jhipster-blueprint.svg?branch=master
+[travis-image]: https://travis-ci.org/jhipster/generator-jhipster-blueprint.svg?branch=main
 [travis-url]: https://travis-ci.org/jhipster/generator-jhipster-blueprint
 [daviddm-image]: https://david-dm.org/jhipster/generator-jhipster-blueprint.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/jhipster/generator-jhipster-blueprint

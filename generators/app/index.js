@@ -139,7 +139,7 @@ module.exports = class extends Generator {
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';
-            this.authorUrl = 'https://twitter.com/java_hipster';
+            this.authorUrl = 'https://twitter.com/jhipster';
             this.license = 'apache';
             done();
         } else {
@@ -219,7 +219,7 @@ module.exports = class extends Generator {
                 `npm link generator-jhipster-${this.moduleName}`
             )}`
         );
-        this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprint ${this.moduleName}`)}`);
+        this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprints ${this.moduleName}`)}`);
         this.log('- then, come back here, and begin to code!\n');
     }
 };

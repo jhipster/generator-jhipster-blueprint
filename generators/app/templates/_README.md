@@ -47,7 +47,7 @@ yarn global upgrade generator-jhipster-<%= moduleName %>
 To use this blueprint, run the below command
 
 ```bash
-jhipster --blueprint <%= moduleName %>
+jhipster --blueprints <%= moduleName %>
 ```
 
 
@@ -84,7 +84,7 @@ mkdir my-app && cd my-app
 npm link generator-jhipster-<%= moduleName %>
 npm link generator-jhipster (Optional: Needed only if you are using a non-released JHipster version)
 
-jhipster -d --blueprint <%= moduleName %>
+jhipster -d --blueprints <%= moduleName %>
 
 ```
 

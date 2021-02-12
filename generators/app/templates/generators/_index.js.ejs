@@ -9,14 +9,14 @@ module.exports = class extends <%= generators[subGenerator].name %> {
 
         <% if (subGenerator.startsWith('entity-')) { %>
         if (!this.jhipsterContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`);
+            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints <%= moduleName %>')}`);
         }
         <% } else { %>
         const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
 
         if (!jhContext) {
             this.error(
-                `This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint <%= moduleName %>')}`
+                `This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints <%= moduleName %>')}`
             );
         }
 

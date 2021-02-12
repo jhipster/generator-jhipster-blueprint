@@ -219,7 +219,7 @@ module.exports = class extends Generator {
                 `npm link generator-jhipster-${this.moduleName}`
             )}`
         );
-        this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprint ${this.moduleName}`)}`);
+        this.log(`    - launch JHipster with flags: ${chalk.yellow.bold(`jhipster --blueprints ${this.moduleName}`)}`);
         this.log('- then, come back here, and begin to code!\n');
     }
 };

@@ -139,7 +139,7 @@ module.exports = class extends Generator {
             this.githubName = 'jhipster-bot';
             this.authorName = 'JHipster Bot';
             this.authorEmail = 'jhipster@localhost';
-            this.authorUrl = 'https://twitter.com/java_hipster';
+            this.authorUrl = 'https://twitter.com/jhipster';
             this.license = 'apache';
             done();
         } else {

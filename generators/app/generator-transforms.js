@@ -2,7 +2,7 @@ const through = require('through2');
 const prettier = require('prettier');
 const prettierOptions = require('./templates/prettierrc.json');
 
-const prettierTransform = function(defaultOptions) {
+const prettierTransform = function (defaultOptions) {
     const transform = (file, encoding, callback) => {
         /* resolve from the projects config */
         prettier.resolveConfig(file.relative).then(options => {
@@ -22,5 +22,5 @@ const prettierTransform = function(defaultOptions) {
 
 module.exports = {
     prettierTransform,
-    prettierOptions
+    prettierOptions,
 };

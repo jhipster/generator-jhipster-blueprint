@@ -34,7 +34,7 @@ module.exports = class extends Generator {
                     'entity-i18n': { name: 'EntityI18nGenerator', path: 'generator-jhipster/generators/entity-i18n' },
                     languages: { name: 'LanguagesGenerator', path: 'generator-jhipster/generators/languages' },
                     'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
-                    'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' }
+                    'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' },
                 };
             },
 
@@ -43,7 +43,7 @@ module.exports = class extends Generator {
                 this.log(
                     chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
                 );
-            }
+            },
         };
     }
 
@@ -72,50 +72,50 @@ module.exports = class extends Generator {
                 name: 'moduleName',
                 validate: validateModuleName,
                 message: 'What is the base name of your module?',
-                default: 'helloworld'
+                default: 'helloworld',
             },
             {
                 type: 'input',
                 name: 'moduleDescription',
-                message: 'Give a description of your module'
+                message: 'Give a description of your module',
             },
             {
                 type: 'input',
                 name: 'jhipsterVersion',
                 when: () => typeof this.jhipsterVersion === 'undefined',
-                message: 'Latest JHipster version could not be retrieved. Which version are you targeting?'
+                message: 'Latest JHipster version could not be retrieved. Which version are you targeting?',
             },
             {
                 type: 'checkbox',
                 name: 'blueprintSubs',
                 message: 'Which sub-generators do you want to override?',
-                choices: Object.keys(this.generators)
+                choices: Object.keys(this.generators),
             },
             {
                 type: 'input',
                 name: 'githubName',
                 validate: validateGitHubName,
                 store: true,
-                message: 'What is your GitHub username?'
+                message: 'What is your GitHub username?',
             },
             {
                 type: 'input',
                 name: 'authorName',
                 message: 'Who are you? Firstname Lastname',
                 default: 'Firstname Lastname',
-                store: true
+                store: true,
             },
             {
                 type: 'input',
                 name: 'authorEmail',
                 message: 'Your email?',
-                store: true
+                store: true,
             },
             {
                 type: 'input',
                 name: 'authorUrl',
                 message: 'Your home page url?',
-                store: true
+                store: true,
             },
             {
                 type: 'list',
@@ -125,10 +125,10 @@ module.exports = class extends Generator {
                     { name: 'No license', value: 'no' },
                     { name: 'Apache License 2.0', value: 'apache' },
                     { name: 'GNU General Public License v3.0', value: 'gnu' },
-                    { name: 'MIT License', value: 'mit' }
+                    { name: 'MIT License', value: 'mit' },
                 ],
-                default: 'no'
-            }
+                default: 'no',
+            },
         ];
 
         if (this.default) {
@@ -163,7 +163,7 @@ module.exports = class extends Generator {
 
     writing() {
         // function to use directly template
-        this.template = function(source, destination) {
+        this.template = function (source, destination) {
             this.fs.copyTpl(this.templatePath(source), this.destinationPath(destination), this);
         };
 

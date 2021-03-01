@@ -1,8 +1,10 @@
 {
-    "generator-jhipster-helloworld": {
+    "generator-jhipster": {
         "promptValues": {
-            "packageName": "io.github.jhipster.blueprint"
+            "packageName": "io.github.jhipster.blueprint",
+            "nativeLanguage": "en"
         },
+        "jhipsterVersion": "6.10.5",
         "applicationType": "monolith",
         "baseName": "jhipsterBlueprintApplication",
         "packageName": "io.github.jhipster.blueprint",
@@ -20,23 +22,32 @@
         "serviceDiscoveryType": false,
         "buildTool": "maven",
         "enableSwaggerCodegen": false,
-        "jwtSecretKey": "147e04cf224f52908a60d7a2902e19e0648d0a8c52503b4624f1708478dd29ba2885a9bb823c85873a76b27964a90e22f1e8",
+        "jwtSecretKey": "NjhhMjViYzFkYTQxZGY2ZjQxMTVkNWVjNTBkN2ExM2QxMTQ3Yzk2MjM3YWM3YWE5Mzc5MWM5NzllMjZhYWNiNDNkY2NhODcyYzYzMjVlM2IyZTRkZjg0ZTVjMjUzOGJkMzhlZThkZGEwYWE2MmEwODA5M2IzYjg0NmFhYTZlODA=",
+        "embeddableLaunchScript": false,
+        "useSass": true,
+        "clientPackageManager": "npm",
         "clientFramework": "angularX",
-        "useSass": false,
-        "clientPackageManager": "npm"
-    },
-    "generator-jhipster": {
-        "promptValues": {
-            "nativeLanguage": "en"
-        },
-        "applicationType": "monolith",
-        "baseName": "jhipsterBlueprintApplication",
+        "clientTheme": "none",
+        "clientThemeVariant": "",
+        "creationTimestamp": 1614622054466,
         "testFrameworks": ["gatling", "protractor"],
         "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [
+            {
+                "name": "generator-jhipster-helloworld",
+                "version": "0.0.0"
+            }
+        ],
         "enableTranslation": true,
-        "clientPackageManager": "npm",
         "nativeLanguage": "en",
         "languages": ["en", "fr"],
-        "blueprint": "generator-jhipster-helloworld"
+        "blueprints": [
+            {
+                "name": "generator-jhipster-helloworld",
+                "version": "0.0.0"
+            }
+        ]
     }
 }

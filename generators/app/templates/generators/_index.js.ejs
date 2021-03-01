@@ -22,21 +22,6 @@ module.exports = class extends <%= generators[subGenerator].name %> {
 
         this.configOptions = jhContext.configOptions || {};
         <% } %>
-
-        <% if(subGenerator === 'server') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupServerOptions(this, jhContext);
-        <% } else if(subGenerator === 'client') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupClientOptions(this, jhContext);
-        <% } else if (subGenerator === 'entity') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
-        <% } else if (subGenerator === 'common') {%>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupServerOptions(this, jhContext);
-        jhContext.setupClientOptions(this, jhContext);
-        <% } %>
     }
 
     get initializing() {

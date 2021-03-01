@@ -24,8 +24,6 @@ jobs:
             - uses: actions/setup-node@v2.1.4
               with:
                   node-version: 14.15.0
-            - name: 'TOOLS: update NPM'
-              run: npm install -g npm
             - name: 'TOOLS: install google-chrome-stable'
               run: |
                   sudo apt update

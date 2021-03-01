@@ -176,7 +176,7 @@ module.exports = class extends Generator {
         this.template('prettierignore', '.prettierignore');
         this.template('gitattributes', '.gitattributes');
         this.template('gitignore', '.gitignore');
-        this.template('_travis.yml', '.travis.yml');
+        this.template('_generator.yml', '.github/workflows/generator.yml');
         this.template('_package.json', 'package.json');
         if (this.license === 'apache') {
             this.template('_LICENSE_APACHE', 'LICENSE');

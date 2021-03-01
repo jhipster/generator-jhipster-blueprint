@@ -11,7 +11,7 @@ const expectedFiles = {
         '.prettierignore',
         '.gitattributes',
         '.gitignore',
-        '.travis.yml',
+        '.github/workflows/generator.yml',
         'package.json',
         'README.md',
     ],

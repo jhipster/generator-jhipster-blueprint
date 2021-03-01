@@ -52,7 +52,8 @@ module.exports = class extends Generator {
         const done = this.async();
         new NpmApi()
             .repo('generator-jhipster')
-            .package()
+            .version('beta')
+            // .package() use this when we are not targeting a beta version
             .then(
                 pkg => {
                     this.jhipsterVersion = pkg.version;

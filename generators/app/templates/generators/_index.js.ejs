@@ -58,7 +58,7 @@ module.exports = class extends <%= generators[subGenerator].name %> {
          *              // Do all your stuff here
          *          },
          *      }
-         *      return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
+         *      return { ...phaseFromJHipster, ...myCustomPhaseSteps };
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster

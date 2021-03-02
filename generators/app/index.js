@@ -35,6 +35,10 @@ module.exports = class extends Generator {
                     languages: { name: 'LanguagesGenerator', path: 'generator-jhipster/generators/languages' },
                     'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
                     'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' },
+                    heroku: { name: 'HerokuGenerator', path: 'generator-jhipster/generators/heroku' },
+                    cypress: { name: 'CypressGenerator', path: 'generator-jhipster/generators/cypress' },
+                    entities: { name: 'EntitiesGenerator', path: 'generator-jhipster/generators/entities' },
+                    'ci-cd': { name: 'CiCdGenerator', path: 'generator-jhipster/generators/ci-cd' }
                 };
                 this.packagejs = packagejs;
             },

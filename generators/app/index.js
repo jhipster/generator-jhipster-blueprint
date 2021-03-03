@@ -37,6 +37,7 @@ module.exports = class extends Generator {
                     'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' },
                     heroku: { name: 'HerokuGenerator', path: 'generator-jhipster/generators/heroku' },
                     cypress: { name: 'CypressGenerator', path: 'generator-jhipster/generators/cypress' },
+                    page: { name: 'PageGenerator', path: 'generator-jhipster/generators/page' },
                     entities: { name: 'EntitiesGenerator', path: 'generator-jhipster/generators/entities' },
                     'ci-cd': { name: 'CiCdGenerator', path: 'generator-jhipster/generators/ci-cd' }
                 };
@@ -203,7 +204,11 @@ module.exports = class extends Generator {
             }
             this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
             if (!['common', 'client', 'server'].includes(generator)) {
-                this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+                const folderPrefix = generator === 'page' ? 'vue' : 'ngx';
+                this.template(
+                    `test/templates/${folderPrefix}-blueprint/.yo-rc.json.ejs`,
+                    `test/templates/${folderPrefix}-blueprint/.yo-rc.json`
+                );
             }
 
             this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);

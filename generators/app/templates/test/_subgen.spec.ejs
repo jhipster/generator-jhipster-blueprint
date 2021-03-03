@@ -12,7 +12,7 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
                 .run('generator-jhipster/generators/<% if (subGenerator.startsWith('entity')) { %>entity<% } else { %><%= subGenerator %><% } %>')
 <%_ if (!['common', 'client', 'server'].includes(subGenerator)) { _%>
                 .inTmpDir((dir) => {
-                    fse.copySync(path.join(__dirname, '../test/templates/ngx-blueprint'), dir);
+                    fse.copySync(path.join(__dirname, '../test/templates/<% if (subGenerator === 'page') { %>vue<% } else { %>ngx<% } %>-blueprint'), dir);
                 })
 <%_ } _%>
                 .withOptions({

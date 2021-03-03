@@ -7,8 +7,8 @@ const helpers = require('yeoman-test');
 
 describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster blueprint', () => {
     describe('Sample test', () => {
-        before((done) => {
-            helpers
+        before(() => {
+            return helpers
                 .run('generator-jhipster/generators/<% if (subGenerator.startsWith('entity')) { %>entity<% } else { %><%= subGenerator %><% } %>')
 <%_ if (!['common', 'client', 'server'].includes(subGenerator)) { _%>
                 .inTmpDir((dir) => {
@@ -54,8 +54,7 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
                     buildTool: 'maven',
                     rememberMeKey: '2bb60a80889aa6e6767e9ccd8714982681152aa5'
 <%_ } _%>
-                })
-                .on('end', done);
+                });
         });
 
         it('it works', () => {

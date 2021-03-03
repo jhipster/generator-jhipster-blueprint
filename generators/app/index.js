@@ -50,25 +50,18 @@ module.exports = class extends Generator {
                     chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
                 );
             },
-        };
-    }
 
-    configuring() {
-        const done = this.async();
-        new NpmApi()
-            .repo('generator-jhipster')
-            .version('beta')
-            // .package() use this when we are not targeting a beta version
-            .then(
-                pkg => {
+            async jhipsterVersion() {
+                try {
+                    const pkg = await new NpmApi().repo('generator-jhipster').version('beta');
+                    // .package() use this when we are not targeting a beta version
                     this.jhipsterVersion = pkg.version;
-                    done();
-                },
-                err => {
-                    this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
-                    done();
+                    this.log.info(`Targeting generator-jhipster@${this.jhipsterVersion}`);
+                } catch (error) {
+                    this.log.error(`Something went wrong fetching the latest generator-jhipster version...\n${error}`);
                 }
-            );
+            }
+        };
     }
 
     prompting() {
@@ -154,7 +147,7 @@ module.exports = class extends Generator {
                 this.props = props;
                 this.moduleName = props.moduleName;
                 this.moduleDescription = props.moduleDescription;
-                this.jhipsterVersion = props.jhipsterVersion;
+                this.jhipsterVersion = props.jhipsterVersion || this.jhipsterVersion;
                 this.blueprintSubs = props.blueprintSubs;
                 this.githubName = props.githubName;
                 this.authorName = props.authorName;

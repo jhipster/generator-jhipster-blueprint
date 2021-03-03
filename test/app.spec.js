@@ -31,6 +31,11 @@ const expectedFiles = {
     server: ['generators/server/index.js'],
     'spring-controller': ['generators/spring-controller/index.js'],
     'spring-service': ['generators/spring-service/index.js'],
+    'ci-cd': ['generators/ci-cd/index.js'],
+    cypress: ['generators/cypress/index.js'],
+    page: ['generators/page/index.js'],
+    entities: ['generators/entities/index.js'],
+    heroku: ['generators/heroku/index.js'],
     common: ['generators/common/index.js'],
     license: ['LICENSE'],
 };
@@ -38,6 +43,10 @@ const expectedFiles = {
 const ALL_SUBGENS = [
     'app',
     'client',
+    'ci-cd',
+    'cypress',
+    'page',
+    'entities',
     'entity',
     'common',
     'entity-client',

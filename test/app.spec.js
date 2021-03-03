@@ -43,6 +43,7 @@ const ALL_SUBGENS = [
     'entity-client',
     'entity-i18n',
     'entity-server',
+    'heroku',
     'languages',
     'server',
     'spring-controller',

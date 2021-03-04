@@ -1,3 +1,4 @@
+<% const generatorPackageJson = require('../../../package.json'); %>
 {
   "name": "generator-jhipster-<%= moduleName %>",
   "version": "0.0.0",
@@ -38,7 +39,7 @@
     "fs-extra": "6.0.1",
     "jsdoc": "3.5.5",
     "mocha": "5.2.0",
-    "prettier": "1.14.3",
+    "prettier": "<%= generatorPackageJson.devDependencies.prettier %>",
     "sinon": "6.0.0",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "1.7.2"

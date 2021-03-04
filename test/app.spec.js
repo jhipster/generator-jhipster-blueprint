@@ -13,14 +13,14 @@ const expectedFiles = {
         '.gitignore',
         '.travis.yml',
         'package.json',
-        'README.md'
+        'README.md',
     ],
     app: ['generators/app/index.js'],
     client: [
         'generators/client/index.js',
         'generators/client/files.js',
         'generators/client/prompts.js',
-        'generators/client/templates/_dummy.txt'
+        'generators/client/templates/_dummy.txt',
     ],
     templates: ['test/templates/ngx-blueprint/.yo-rc.json'],
     entity: ['generators/entity/index.js'],
@@ -32,7 +32,7 @@ const expectedFiles = {
     'spring-controller': ['generators/spring-controller/index.js'],
     'spring-service': ['generators/spring-service/index.js'],
     common: ['generators/common/index.js'],
-    license: ['LICENSE']
+    license: ['LICENSE'],
 };
 
 const ALL_SUBGENS = [
@@ -46,7 +46,7 @@ const ALL_SUBGENS = [
     'languages',
     'server',
     'spring-controller',
-    'spring-service'
+    'spring-service',
 ];
 
 describe('JHipster generator blueprint', () => {
@@ -62,7 +62,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'no'
+                    license: 'no',
                 })
                 .on('end', done);
         });
@@ -93,7 +93,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'apache'
+                    license: 'apache',
                 })
                 .on('end', done);
         });
@@ -126,7 +126,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'gpl'
+                    license: 'gpl',
                 })
                 .on('end', done);
         });
@@ -159,7 +159,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'mit'
+                    license: 'mit',
                 })
                 .on('end', done);
         });
@@ -193,7 +193,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'no'
+                    license: 'no',
                 })
                 .on('end', done);
         });
@@ -231,7 +231,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'no'
+                    license: 'no',
                 })
                 .on('end', done);
         });
@@ -267,7 +267,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'no'
+                    license: 'no',
                 })
                 .on('end', done);
         });
@@ -300,7 +300,7 @@ describe('JHipster generator blueprint', () => {
                     authorName: 'authorName',
                     authorEmail: 'mail@mail',
                     authorUrl: 'authorUrl',
-                    license: 'no'
+                    license: 'no',
                 })
                 .on('end', done);
         });

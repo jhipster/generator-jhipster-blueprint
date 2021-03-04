@@ -36,6 +36,7 @@ module.exports = class extends Generator {
                     'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
                     'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' },
                 };
+                this.packagejs = packagejs;
             },
 
             displayLogo() {

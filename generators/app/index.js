@@ -39,7 +39,7 @@ module.exports = class extends Generator {
                     cypress: { name: 'CypressGenerator', path: 'generator-jhipster/generators/cypress' },
                     page: { name: 'PageGenerator', path: 'generator-jhipster/generators/page' },
                     entities: { name: 'EntitiesGenerator', path: 'generator-jhipster/generators/entities' },
-                    'ci-cd': { name: 'CiCdGenerator', path: 'generator-jhipster/generators/ci-cd' }
+                    'ci-cd': { name: 'CiCdGenerator', path: 'generator-jhipster/generators/ci-cd' },
                 };
                 this.packagejs = packagejs;
             },
@@ -60,7 +60,7 @@ module.exports = class extends Generator {
                 } catch (error) {
                     this.log.error(`Something went wrong fetching the latest generator-jhipster version...\n${error}`);
                 }
-            }
+            },
         };
     }
 

@@ -6,7 +6,7 @@ const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
 describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster blueprint', () => {
-    describe('Sample test', () => {
+    describe<% if (subGenerator === 'heroku') { %>.skip<% } %>('Sample test', () => {
         before(async function() {
             this.timeout(20000);
 <%_ if (subGenerator === 'page') { _%>
@@ -112,7 +112,7 @@ describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster bluepri
                 .run();
         });
 
-        it<% if (subGenerator === 'heroku') { %>.skip<% } %>('it works', () => {
+        it('it works', () => {
             // Adds your tests here
             assert.textEqual('Write your own tests!', 'Write your own tests!');
         });

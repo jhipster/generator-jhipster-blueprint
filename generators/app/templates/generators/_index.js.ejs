@@ -22,21 +22,6 @@ module.exports = class extends <%= generators[subGenerator].name %> {
 
         this.configOptions = jhContext.configOptions || {};
         <% } %>
-
-        <% if(subGenerator === 'server') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupServerOptions(this, jhContext);
-        <% } else if(subGenerator === 'client') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupClientOptions(this, jhContext);
-        <% } else if (subGenerator === 'entity') { %>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
-        <% } else if (subGenerator === 'common') {%>
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupServerOptions(this, jhContext);
-        jhContext.setupClientOptions(this, jhContext);
-        <% } %>
     }
 
     get initializing() {
@@ -73,7 +58,7 @@ module.exports = class extends <%= generators[subGenerator].name %> {
          *              // Do all your stuff here
          *          },
          *      }
-         *      return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
+         *      return { ...phaseFromJHipster, ...myCustomPhaseSteps };
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster
@@ -105,6 +90,28 @@ module.exports = class extends <%= generators[subGenerator].name %> {
         return super._configuring();
     }
 
+    get composing() {
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._composing();
+    }
+
+    get loading() {
+      // Here we are not overriding this phase and hence its being handled by JHipster
+      return super._loading();
+    }
+
+    get preparing() {
+      // Here we are not overriding this phase and hence its being handled by JHipster
+      return super._preparing();
+    }
+
+<%_ if (subGenerator === 'entity') { _%>
+    get preparingRelationships() {
+      // Here we are not overriding this phase and hence its being handled by JHipster
+      return super._preparingRelationships();
+    }
+<%_ } _%>
+
     get default() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._default();
@@ -125,6 +132,11 @@ module.exports = class extends <%= generators[subGenerator].name %> {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._writing();
         <% } %>
+    }
+
+    get postWriting() {
+      // Here we are not overriding this phase and hence its being handled by JHipster
+      return super._postWriting();
     }
 
     get install() {

@@ -35,6 +35,11 @@ module.exports = class extends Generator {
                     languages: { name: 'LanguagesGenerator', path: 'generator-jhipster/generators/languages' },
                     'spring-controller': { name: 'SpringControllerGenerator', path: 'generator-jhipster/generators/spring-controller' },
                     'spring-service': { name: 'SpringServiceGenerator', path: 'generator-jhipster/generators/spring-service' },
+                    heroku: { name: 'HerokuGenerator', path: 'generator-jhipster/generators/heroku' },
+                    cypress: { name: 'CypressGenerator', path: 'generator-jhipster/generators/cypress' },
+                    page: { name: 'PageGenerator', path: 'generator-jhipster/generators/page' },
+                    entities: { name: 'EntitiesGenerator', path: 'generator-jhipster/generators/entities' },
+                    'ci-cd': { name: 'CiCdGenerator', path: 'generator-jhipster/generators/ci-cd' },
                 };
                 this.packagejs = packagejs;
             },
@@ -45,24 +50,18 @@ module.exports = class extends Generator {
                     chalk.white(`Welcome to the ${chalk.bold('JHipster Blueprint')} Generator! ${chalk.yellow(`v${packagejs.version}\n`)}`)
                 );
             },
-        };
-    }
 
-    configuring() {
-        const done = this.async();
-        new NpmApi()
-            .repo('generator-jhipster')
-            .package()
-            .then(
-                pkg => {
+            async jhipsterVersion() {
+                try {
+                    const pkg = await new NpmApi().repo('generator-jhipster').version('beta');
+                    // .package() use this when we are not targeting a beta version
                     this.jhipsterVersion = pkg.version;
-                    done();
-                },
-                err => {
-                    this.warning(`Something went wrong fetching the latest generator-jhipster version...\n${err}`);
-                    done();
+                    this.log.info(`Targeting generator-jhipster@${this.jhipsterVersion}`);
+                } catch (error) {
+                    this.log.error(`Something went wrong fetching the latest generator-jhipster version...\n${error}`);
                 }
-            );
+            },
+        };
     }
 
     prompting() {
@@ -148,7 +147,7 @@ module.exports = class extends Generator {
                 this.props = props;
                 this.moduleName = props.moduleName;
                 this.moduleDescription = props.moduleDescription;
-                this.jhipsterVersion = props.jhipsterVersion;
+                this.jhipsterVersion = props.jhipsterVersion || this.jhipsterVersion;
                 this.blueprintSubs = props.blueprintSubs;
                 this.githubName = props.githubName;
                 this.authorName = props.authorName;
@@ -176,7 +175,7 @@ module.exports = class extends Generator {
         this.template('prettierignore', '.prettierignore');
         this.template('gitattributes', '.gitattributes');
         this.template('gitignore', '.gitignore');
-        this.template('_travis.yml', '.travis.yml');
+        this.template('_generator.yml', '.github/workflows/generator.yml');
         this.template('_package.json', 'package.json');
         if (this.license === 'apache') {
             this.template('_LICENSE_APACHE', 'LICENSE');
@@ -198,7 +197,11 @@ module.exports = class extends Generator {
             }
             this.template('test/_subgen.spec.ejs', `test/${generator}.spec.js`);
             if (!['common', 'client', 'server'].includes(generator)) {
-                this.template('test/templates/ngx-blueprint/.yo-rc.json.ejs', 'test/templates/ngx-blueprint/.yo-rc.json');
+                const folderPrefix = generator === 'page' ? 'vue' : 'ngx';
+                this.template(
+                    `test/templates/${folderPrefix}-blueprint/.yo-rc.json.ejs`,
+                    `test/templates/${folderPrefix}-blueprint/.yo-rc.json`
+                );
             }
 
             this.template('generators/_index.js.ejs', `generators/${generator}/index.js`);

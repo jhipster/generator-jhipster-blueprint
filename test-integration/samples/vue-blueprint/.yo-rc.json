@@ -4,7 +4,7 @@
             "packageName": "io.github.jhipster.blueprint",
             "nativeLanguage": "en"
         },
-        "jhipsterVersion": "6.10.5",
+        "jhipsterVersion": "7.0.0-beta.1",
         "applicationType": "monolith",
         "baseName": "jhipsterBlueprintApplication",
         "packageName": "io.github.jhipster.blueprint",
@@ -26,7 +26,7 @@
         "embeddableLaunchScript": false,
         "useSass": true,
         "clientPackageManager": "npm",
-        "clientFramework": "angularX",
+        "clientFramework": "vue",
         "clientTheme": "none",
         "clientThemeVariant": "",
         "creationTimestamp": 1614622054466,

@@ -8,7 +8,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2.1.5
               with:
-                  node-version: 14.15.0
+                  node-version: 14.16.0
             - name: Install node.js packages
               run: npm install
             - name: Check prettier formatting
@@ -23,7 +23,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2.1.5
               with:
-                  node-version: 14.15.0
+                  node-version: 14.16.0
             - name: 'TOOLS: install google-chrome-stable'
               run: |
                   sudo apt update

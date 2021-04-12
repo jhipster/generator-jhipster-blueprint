@@ -4,7 +4,7 @@
             "packageName": "io.github.jhipster.blueprint",
             "nativeLanguage": "en"
         },
-        "jhipsterVersion": "7.0.0-beta.1",
+        "jhipsterVersion": "7.0.1",
         "applicationType": "monolith",
         "baseName": "jhipsterBlueprintApplication",
         "packageName": "io.github.jhipster.blueprint",

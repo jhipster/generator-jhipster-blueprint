@@ -8,7 +8,7 @@ const helpers = require('yeoman-test');
 describe('Subgenerator <%= subGenerator %> of <%= moduleName %> JHipster blueprint', () => {
     describe<% if (subGenerator === 'heroku') { %>.skip<% } %>('Sample test', () => {
         before(async function() {
-            this.timeout(20000);
+            this.timeout(100000);
 <%_ if (subGenerator === 'page') { _%>
             const result = await helpers
                 .create('jhipster:client')

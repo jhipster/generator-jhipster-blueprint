@@ -53,7 +53,8 @@ module.exports = class extends Generator {
 
             async jhipsterVersion() {
                 try {
-                    const pkg = await new NpmApi().repo('generator-jhipster').version('beta');
+                    const pkg = await new NpmApi().repo('generator-jhipster').package();
+                    // .version('beta') generator-jhipster v7.2.0 realeased, should change back to package()
                     // .package() use this when we are not targeting a beta version
                     this.jhipsterVersion = pkg.version;
                     this.log.info(`Targeting generator-jhipster@${this.jhipsterVersion}`);

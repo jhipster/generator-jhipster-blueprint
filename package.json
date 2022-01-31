@@ -21,7 +21,7 @@
         "url": "git+https://github.com/jhipster/generator-jhipster-blueprint.git"
     },
     "dependencies": {
-        "chalk": "4.1.2",
+        "chalk": "5.0.0",
         "gulp-filter": "7.0.0",
         "mkdirp": "1.0.4",
         "npm-api": "1.0.1",

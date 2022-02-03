@@ -19,8 +19,6 @@ module.exports = class extends <%= generators[subGenerator].name %> {
                 `This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints <%= moduleName %>')}`
             );
         }
-
-        this.configOptions = jhContext.configOptions || {};
         <% } %>
     }
 
@@ -127,7 +125,7 @@ module.exports = class extends <%= generators[subGenerator].name %> {
                 writeFiles.call(this);
             }
         };
-        return Object.assign(phaseFromJHipster, customPhaseSteps);
+        return { ...phaseFromJHipster, ...customPhaseSteps };
         <% } else { %>
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._writing();
